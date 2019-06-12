@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>fondo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <link rel="stylesheet" href="index.css">
+        <script src="index.js"></script>
+    </head>
+    <body  onload="search(); checkNewID();" >
+            <div id="background">
+                    <img src="http://shirley-setia.000webhostapp.com/FondoBackground.svg" style="width: 100%; min-height: 100%;" alt="background">
+            </div>
+        <header>
+            <nav> 
+                <ul>
+                    <li> 
+                        <a id="mobilenavall" href="/index.html">
+                            <h1>fondo</h1>
+                        </a>
+                    </li>
+                    <li id="mobilenav" onclick="togglenav();">&#9776;</li>
+                    <div id="navlist">
+                    <li><a href="/index.html/confessions/" onclick="togglenav();">Confessions</a></li>
+                    <li><a href="profile.html" onclick="togglenav();">Profile</a></li>
+                    <li><a href="/index.html/about" onclick="togglenav();">About</a></li>
+                    <div id="rightoption">
+                    <li><input type="search" placeholder="Enter ID" id="searchbar" style="border-radius: 10px; outline:none;" name="searchID"></li>
+                    <li><a href="/create" onclick="togglenav();" style="border: 2px solid white; border-radius:5px; padding:5px; margin:10px;">&#65291; CREATE</a></li>
+                    </div>
+                    </div>
+                </ul>
+            </nav>
+        </header>
+        <section id="container" style="margin-top: 86.6px;">
+            <section id="create" style="margin-top: 86.6px;">
+                <div id = 'formCss'>
+                    <form action="/fileupload" method="POST" enctype="multipart/form-data">
+                        <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
+                        <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br>
+                        <input id="fileInput" type="file" name="filetoupload"><br>
+                        <label for="tags">Enter Tags (Space Separated)</label>
+                        <input type="text" name="tags">
+                        <input type="submit" id="submit" value="submit">
+                        <!-- style="visibility: hidden; height: 0; width: 0; padding:0;margin: 0; border: 0;"> -->
+                    </form>
+            </div>
+            </section>
+        </section>
+    </body>
+</html>

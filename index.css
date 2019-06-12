@@ -5,7 +5,8 @@ nav{
     position: fixed;
     width: 100%;
     top:0px;
-    box-shadow: 0px 4px 8px 0px #888888;
+    box-shadow: 0px 4px 8px 0px #ff0000;
+    z-index: 10;
 }
 #mobilenav{
     visibility: hidden;
@@ -33,15 +34,19 @@ ul {
     margin: 17px 16px;
     text-decoration: none;
   }
+#searchbar:hover{
+  background-color: cyan;
+}
   li :hover {
     background-color: #111;
   }
   #navlist{
       font-size: 23px;
+      margin-top: 3px;
   }
   #mobilenavall{
     padding:10px;
-    margin: 0px;
+    margin-top: 2px;
     font-size:18px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
@@ -49,8 +54,237 @@ ul {
   #rightoption{
       float: right;
   }
-/* ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| */
+
+  #container{
+    background-size:unset;
+  }
+
+  #feed{
+    text-align: center;
+    
+  }
+  #feedhead{
+    display: inline-block;
+    width: 95%;
+    max-width: 1010px;
+    background-color: rgb(103, 103, 103);
+    color:white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 7px;
+    padding-bottom: 10px;
+    font-size: 32px;
+    box-shadow: 0px 0px 16px 3px #000000;
+  }
+
+#feed article{
+    display: inline-block;
+    background-color:#f3f3ef;
+    width: 95%;
+    max-width: 1010px;
+    padding: 7px;
+    box-shadow: 0px 0px 20px 3px;
+    margin-bottom: 5px;
+    padding-bottom: 20px;
+}
+
+#feed article header{
+  background-color: #222222;
+  color:white;
+  font-size: 20px;
+  padding: 9px;
+}
+#feed article p{
+  font-size: 20px;
+  padding: 2px;
+  border: 2px dotted;
+  border-top: none;
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+#background{
+  top: 0px;
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  color: black;
+  height: 100%;
+  width: 100%;
+  z-index:-100;
+}
+
+#background img{
+  object-fit: cover;
+}
+
+.passInput{
+  text-align: center;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 3px solid black;
+  padding: 5px;
+  font-size: 18px;
+  color: white;
+  min-width: 320px;
+  max-width: 650px;
+  margin: 5px;
+  outline: none;
+}
+
+.passInput::placeholder{
+  color: rgb(248, 247, 247);
+}
+
+#passCs::placeholder{
+  color: black !important;
+}
+#passCs{
+  color: black;
+}
+
+#test{
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 0;
+  color: yellow;
+}
+
+
+
+/* //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+  //!!!!!!!!!!!!!!!!!!!!PROFILE CSS!!!!!!!!!!!!!!!!!!!!111
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 */
+
+  #PROcontainerHead{
+    text-align: center;
+    font-size: 25px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 6px;
+  }
+
+  #photolist{
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 5px;
+    text-align: center;
+    box-shadow: 0px 0px 8px 0px;
+  }
+  .photo{
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    border-bottom: 3px solid black;
+  }
+
+  .photo img{
+    border: 2px solid black;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px 2px #000000;
+  }
+
+  #photoFormat{
+    display: none;
+  }
+
+  #View{
+    margin: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    font-size: 24px;
+    border: 2px solid black;
+    background-color: rgba(red, 0,0, 1);
+  }
+  
+  #formCss{
+    text-align: center;
+    padding: 4px;
+    color: white;
+    margin-top: 20px;
+  }
+
+  #formCss form{
+    display: inline-block;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 7px;
+    border: 2px solid black;
+    font-size: 20px;
+  }
+
+  #fileInput{
+    padding: 7px;
+    margin: 10px;
+    background-color: #dba5a5;
+    border-radius: 8px;
+  }
+
+  #imageBtnLeft{
+    outline: none;
+    border:0;
+    margin: 0;
+    color:white;
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-size: 18px;
+  }
+
+  #imageBtnMiddle{
+    outline: none;
+    border:0;
+    color:white;
+    font-size: 18px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin:0
+  }
+
+  #imageBtnRight{
+    outline: none;
+    border:0;
+    margin: 0;
+    color:white;
+    border-top-right-radius: 9px;
+    border-bottom-right-radius: 9px;
+    padding: 10px;
+    font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  #imageBtnLeft:hover{
+    background-color: white;
+    color: black;
+  }
+
+  #imageBtnMiddle:hover{
+    background-color: white;
+    color: black;
+  }
+
+  #imageBtnRight:hover{
+    background-color: white;
+    color: black;
+  }
+
+  
+
+/* //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+  //!!!!!!!!!!!!!!!!!!!!PROFILE CSS Ends!!!!!!!!!!!!!!!!!!!!111
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111 */
+
   @media only screen and (max-width: 824px) {
 *{
     box-sizing: border-box;
@@ -64,7 +298,7 @@ ul {
         font-size: 25px;
         float: right;
         margin: 10px 15px 7px;
-        padding:3px 6px 3px 6px;
+        padding:3px 6px 6px 6px;
         border: 2px solid white;
         border-radius: 9px;
     }
@@ -87,7 +321,15 @@ ul {
     #rightoption{
         width: 100%;
     }
-    #searchbar{
-        color: white;
+    .photo{
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-right: 0;
+      padding-left: 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 3px solid black;
     }
   }
