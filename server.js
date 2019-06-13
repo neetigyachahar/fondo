@@ -12,9 +12,7 @@ var con = mysql.createConnection({
 });
 
 con.connect(function(err){
-    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
     console.log("Database Connected!");
-    }
 });
 
 http.createServer(function(req,res){
