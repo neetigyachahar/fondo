@@ -130,10 +130,11 @@ http.createServer(function(req,res){
                             'UserID': null,
                             'PhotoData': ""
                         };
-                        console.log(`SELECT * FROM PhotoBase WHERE UserID = "${ki.search}"`);
+                        console.log(ki.search);
+                        console.log(`SELECT * FROM PhotoBase WHERE UserID = ${ki.search}`);
                         console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                         con.query(`SELECT * FROM PhotoBase WHERE UserID = ${ki.search} AND PhotoPrivacy = 'Public'`, function(err, result){
-                            if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                            if (err)         {      console.log(err);       res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                             console.log("__________________________"+(result)+"sfsf");
                             if((result).length == 0){
                                 console.log("fdzvfmofvnajfnv+++++++++++++++++++++++++");
