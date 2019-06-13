@@ -46,29 +46,35 @@ http.createServer(function(req,res){
                 if((files.filetoupload.type).split('/')[0] == "image"){
                 con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
-                    console.log("ergeeargggggggggggggggggggggggggggggggg"+result);
+                    if(result.length == 0){
+                        result = [
+                            {
+                                'SrNo' : 0
+                            }
+                        ];
+                    }
                     var oldname = files.filetoupload.path;
-                    var newname = __dirname+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
+                    var newname = __dirname+"\\"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
                     fs.rename(oldname, newname, function(err){
                         if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                         que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
                         con.query(que, function(err, resultz){
                             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
-                        if(toString(resultz) == '[]'){
+                        if(resultz.length == 0){
                             console.log(resultz);
-                            var passwd = resultz[0].userPassword;
+                            var passwd = fields.Password;
                             var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
-                                res.write("<script>window.location.href = 'https://'"+host+"'/profile.html';</script>" );
+                                res.write(`<script>window.location.href = 'https://${host}/profile.html';</script>` );
                                 res.end();
                                 }
                             });
                         }
                         else{
                             console.log(fields);
-                            var passwd = fields.Password;
+                            var passwd = resultz[0].userPassword;
                             var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
