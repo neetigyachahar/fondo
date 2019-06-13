@@ -5,19 +5,25 @@ const formidable = require('formidable');
 const mysql = require('mysql');
 
 var con = mysql.createConnection({
-    host : "localhost",
-    user : "root",
-    password: "bharat1@",
-    database: "FondoBase"
+    host : "remotemysql.com",
+    user : "IHXn51U10d",
+    password: "ZZ7sxXwnkE",
+    database: "IHXn51U10d",
+    "port" : "3306"
 });
 
 con.connect(function(err){
-    console.log("Database Connected!");
+    if(err) throw err;
+    var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at timestamp DEFAULT CURRENT_TIMESTAMP	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
+    con.query(que, function (err) {
+       if (err) throw err; 
+       console.log("Database Connected!");
+    });
 });
 
 http.createServer(function(req,res){
     // console.log(req.url.slice(1));
-    var data = url.parse("http://localhost:8080"+req.url, true);
+    var data = url.parse("https://fathomless-refuge-64458.herokuapp.com"+req.url, true);
     data = data.query;
     if (Object.entries(data).length === 0){
         console.log(req.url);
@@ -30,7 +36,7 @@ http.createServer(function(req,res){
                 con.query("select SrNo from PhotoBase where SrNo = (select MAX(SrNo) from PhotoBase)", function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                     var oldname = files.filetoupload.path;
-                    var newname = "C:\\Users\\NEETIGYA CHAHAR\\Desktop\\fondo\\images\\"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
+                    var newname = "https://fathomless-refuge-64458.herokuapp.com"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
                     fs.rename(oldname, newname, function(err){
                         if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                         que = `SELECT userPassword FROM PhotoBase WHERE UserID = ${fields.UserID}`;
@@ -39,11 +45,11 @@ http.createServer(function(req,res){
                         if(toString(resultz) == '[]'){
                             console.log(resultz);
                             var passwd = resultz[0].userPassword;
-                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"http://localhost:8080/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
+                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://fathomless-refuge-64458.herokuapp.com/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
-                                res.write("<script>window.location.href = 'http://localhost:8080/profile.html';</script>" );
+                                res.write("<script>window.location.href = 'https://fathomless-refuge-64458.herokuapp.com/profile.html';</script>" );
                                 res.end();
                                 }
                             });
@@ -51,11 +57,11 @@ http.createServer(function(req,res){
                         else{
                             console.log(fields);
                             var passwd = fields.Password;
-                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"http://localhost:8080/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
+                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://fathomless-refuge-64458.herokuapp.com/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
-                                res.write("<script>window.location.href = 'http://localhost:8080/profile.html'</script>" );
+                                res.write("<script>window.location.href = 'https://fathomless-refuge-64458.herokuapp.com/profile.html'</script>" );
                                 res.end();
                                 }
                             });
