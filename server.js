@@ -55,18 +55,21 @@ http.createServer(function(req,res){
                     }
                     var oldname = files.filetoupload.path;
                     var newname = __dirname+"\\"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
+                    console.log(newname);
                     fs.rename(oldname, newname, function(err){
-                        if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                        if (err)         {    console.log("qqqqqqqqqqqqqqqq");         res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                         que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
                         con.query(que, function(err, resultz){
-                            if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                            if (err)         {        console.log("rrrrrrrrrrrrrrrrrrrr");     res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                         if(resultz.length == 0){
                             console.log(resultz);
+                            console.log("sssssssssssssssssss");
                             var passwd = fields.Password;
                             var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
-                                if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err)         {           console.log("tttttttttttttttttttttt");  res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
+                                console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
                                 res.write(`<script>window.location.href = 'https://${host}/profile.html';</script>` );
                                 res.end();
                                 }
@@ -77,11 +80,11 @@ http.createServer(function(req,res){
                             var passwd = resultz[0].userPassword;
                             var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
-                                if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err)      throw err;
                                 res.writeHead(200);
                                 res.write(`<script>window.location.href = 'https://${host}/profile.html'</script>` );
                                 res.end();
-                                }
+                                
                             });
                         }
                     }
