@@ -44,19 +44,19 @@ http.createServer(function(req,res){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                 console.log(fields);
                 if((files.filetoupload.type).split('/')[0] == "image"){
-                con.query("select SrNo from PhotoBase where SrNo = (select MAX(SrNo) from PhotoBase)", function(err, result){
+                con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                     var oldname = files.filetoupload.path;
                     var newname = __dirname+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
                     fs.rename(oldname, newname, function(err){
                         if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
-                        que = `SELECT userPassword FROM PhotoBase WHERE UserID = ${fields.UserID}`;
+                        que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
                         con.query(que, function(err, resultz){
                             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                         if(toString(resultz) == '[]'){
                             console.log(resultz);
                             var passwd = resultz[0].userPassword;
-                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
+                            var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
@@ -68,7 +68,7 @@ http.createServer(function(req,res){
                         else{
                             console.log(fields);
                             var passwd = fields.Password;
-                            var uploadSql = `insert into PhotoBase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
+                            var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
                             con.query(uploadSql, function(err, result){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
@@ -131,14 +131,14 @@ http.createServer(function(req,res){
                             'PhotoData': ""
                         };
                         console.log(ki.search);
-                        console.log(`SELECT * FROM PhotoBase WHERE UserID = ${ki.search}`);
+                        console.log(`SELECT * FROM photobase WHERE UserID = ${ki.search}`);
                         console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
-                        con.query(`SELECT * FROM PhotoBase WHERE UserID = ${ki.search} AND PhotoPrivacy = 'Public'`, function(err, result){
+                        con.query(`SELECT * FROM photobase WHERE UserID = ${ki.search} AND PhotoPrivacy = 'Public'`, function(err, result){
                             if (err)         {      console.log(err);       res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                             console.log("__________________________"+(result)+"sfsf");
                             if((result).length == 0){
                                 console.log("fdzvfmofvnajfnv+++++++++++++++++++++++++");
-                                con.query(`SELECT COUNT(*) FROM PhotoBase WHERE UserID = ${ki.search}`, function(err, result){
+                                con.query(`SELECT COUNT(*) FROM photobase WHERE UserID = ${ki.search}`, function(err, result){
                                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                     if(result[0]['COUNT(*)'] > 0 ){
                                         obj.UserID = ki.search;
@@ -195,7 +195,7 @@ http.createServer(function(req,res){
 
         case "password":{
             console.log(ki.password[0]);
-            var que = `SELECT userPassword FROM PhotoBase WHERE UserID = ${parseInt(ki.password[0])}`;
+            var que = `SELECT userPassword FROM photobase WHERE UserID = ${parseInt(ki.password[0])}`;
             console.log(que);
             con.query(que, function(err, results){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
@@ -217,7 +217,7 @@ http.createServer(function(req,res){
         }
     
         case "delete":{
-            var que = `DELETE FROM PhotoBase WHERE SrNo = ${ki.delete}`;
+            var que = `DELETE FROM photobase WHERE SrNo = ${ki.delete}`;
             con.query(que, function(err, result){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                 if (result.affectedRows == 1){
@@ -236,18 +236,18 @@ http.createServer(function(req,res){
         }
 
         case "togglePrivacy" : {
-            var que = `SELECT * FROM PhotoBase WHERE SrNo = ${ki.togglePrivacy}`;
+            var que = `SELECT * FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
             con.query(que, function(err, result){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                 var privacy = "Only me";
                 if (result[0].PhotoPrivacy == "Only me"){
                     privacy = "Public";
                 }
-                que = `UPDATE PhotoBase SET PhotoPrivacy = "${privacy}" WHERE SrNo = ${ki.togglePrivacy}`;
+                que = `UPDATE photobase SET PhotoPrivacy = "${privacy}" WHERE SrNo = ${ki.togglePrivacy}`;
                 con.query(que, function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                     if (result.affectedRows == 1){
-                        que = `SELECT PhotoPrivacy, uploaded_at FROM PhotoBase WHERE SrNo = ${ki.togglePrivacy}`;
+                        que = `SELECT PhotoPrivacy, uploaded_at FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
                         con.query(que, function(err, result){
                             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                             res.writeHead(200);
@@ -268,14 +268,14 @@ http.createServer(function(req,res){
             break;
         }
         case "setback" : {
-            var que = `UPDATE PhotoBase SET SetWallpaper = 0 WHERE UserID = ${ki.UserID} AND SetWallpaper = 1`
+            var que = `UPDATE photobase SET SetWallpaper = 0 WHERE UserID = ${ki.UserID} AND SetWallpaper = 1`
             con.query(que, function(err){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
-                que = `SELECT * FROM PhotoBase WHERE SrNo = ${ki.setback}`
+                que = `SELECT * FROM photobase WHERE SrNo = ${ki.setback}`
                 con.query(que, function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                     if(result[0].UserID == ki.UserID){
-                        que = `UPDATE PhotoBase SET SetWallpaper = 1 WHERE SrNo = ${ki.setback}`
+                        que = `UPDATE photobase SET SetWallpaper = 1 WHERE SrNo = ${ki.setback}`
                         con.query(que, function(err, result1){
                             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                             res.writeHead(200);
@@ -285,13 +285,13 @@ http.createServer(function(req,res){
                         });
                     }
                     else{
-                        que = `SELECT userPassword FROM PhotoBase WHERE UserID = ${ki.UserID}`
+                        que = `SELECT userPassword FROM photobase WHERE UserID = ${ki.UserID}`
                         con.query( que , function(err, pass){
                             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                             console.log(result[0].uploaded_at);
                             var t = result[0].uploaded_at;
                             console.log(t.toUTCString());
-                            que = `INSERT INTO PhotoBase (UserID, link, upvotes, PhotoPrivacy, SetWallpaper, userPassword, tags ) values (${ki.UserID}, "${result[0].link}", ${result[0].upvotes}, "${result[0].PhotoPrivacy}", 1, "${pass[0].userPassword}", "${result[0].tags}")`;
+                            que = `INSERT INTO photobase (UserID, link, upvotes, PhotoPrivacy, SetWallpaper, userPassword, tags ) values (${ki.UserID}, "${result[0].link}", ${result[0].upvotes}, "${result[0].PhotoPrivacy}", 1, "${pass[0].userPassword}", "${result[0].tags}")`;
                             con.query(que, function(err, abcd){
                                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                 res.writeHead(200);
@@ -309,7 +309,7 @@ http.createServer(function(req,res){
             break;
         }
         case "checkID" : {
-            var que = `SELECT COUNT(*) FROM PhotoBase WHERE UserID = ${ki.checkID}`;
+            var que = `SELECT COUNT(*) FROM photobase WHERE UserID = ${ki.checkID}`;
             con.query(que, function(err, result){
                 if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                 var bool;
