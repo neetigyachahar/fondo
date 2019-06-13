@@ -46,6 +46,7 @@ http.createServer(function(req,res){
                 if((files.filetoupload.type).split('/')[0] == "image"){
                 con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
                     if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    console.log("ergeeargggggggggggggggggggggggggggggggg"+result);
                     var oldname = files.filetoupload.path;
                     var newname = __dirname+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
                     fs.rename(oldname, newname, function(err){
@@ -81,6 +82,7 @@ http.createServer(function(req,res){
                         });
                     }
                     });         
+                }//fsvsve
                 }            
             });
         }
