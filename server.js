@@ -4,20 +4,20 @@ const url = require('url');
 const formidable = require('formidable');
 const mysql = require('mysql');
 
-// var con = mysql.createConnection({
-//     host : "remotemysql.com",
-//     user : "IHXn51U10d",
-//     password: "ZZ7sxXwnkE",
-//     database: "IHXn51U10d",
-//     "port" : "3306"
-// });
-
 var con = mysql.createConnection({
-    host : "localhost",
-    user : "root",
-    password: "bharat1@",
-    database: "FondoBase",
+    host : "remotemysql.com",
+    user : "IHXn51U10d",
+    password: "ZZ7sxXwnkE",
+    database: "IHXn51U10d",
+    "port" : "3306"
 });
+
+// var con = mysql.createConnection({
+//     host : "localhost",
+//     user : "root",
+//     password: "bharat1@",
+//     database: "FondoBase",
+// });
 
 
 con.connect(function(err){
