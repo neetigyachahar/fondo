@@ -82,7 +82,6 @@ http.createServer(function(req,res){
                         });
                     }
                     });         
-                }//fsvsve
                 }            
             });
         }
