@@ -54,7 +54,7 @@ http.createServer(function(req,res){
                         ];
                     }
                     var oldname = files.filetoupload.path;
-                    var newname = __dirname+"\\"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
+                    var newname = __dirname+"/"+(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1] ;
                     console.log(newname);
                     fs.rename(oldname, newname, function(err){
                         if (err)         {    console.log("qqqqqqqqqqqqqqqq");         res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
