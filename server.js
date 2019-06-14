@@ -54,8 +54,8 @@ app.use(express.static('public'));
 
 app.use(function(req, res, next){
     console.log(req.query);
-    console.log(Object.entries(req.query).length);
-    if(Object.entries(req.query).length != 0){
+    console.log(Object.keys(req.query)[0]);
+    if(Object.keys(req.query)[0] == "module"){
         var ki = JSON.parse(req.query.module);
         switch (Object.keys(ki)[0]) {
             case 'search':{fs.readFile('SearchResult.html','utf8', function(err, file){
@@ -298,6 +298,7 @@ app.get('/create', function(req, res){
 // });
 
 app.get('/sign-s3', (req, res) => {
+    console.log("reached1");
     const s3 = new aws.S3();
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
@@ -308,12 +309,18 @@ app.get('/sign-s3', (req, res) => {
       ContentType: fileType,
       ACL: 'public-read'
     };
+
+    console.log("reached2");
   
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if(err){
+    console.log("reached3");
+
         console.log(err);
         return res.end();
       }
+    console.log("reached4");
+
       const returnData = {
         signedRequest: data,
         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
