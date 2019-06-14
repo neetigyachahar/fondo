@@ -119,14 +119,14 @@ http.createServer(function(req,res){
             });
         }
         else{
-        
+        console.log(req.url);
         if(req.url == '/' || req.url == ''){
             var sorce = "index.html";
         } 
         else{
             var sorce = req.url.slice(1);
         }
-        fs.readFile(req.url.slice(1), function(err, bit) 
+        fs.readFile(sorce, function(err, bit) 
         {
             if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
             res.writeHead(200);
