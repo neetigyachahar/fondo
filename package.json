@@ -16,11 +16,16 @@
     "npm": "~6.4.1"
   },
   "dependencies": {
+    "aws-sdk": "^2.475.0",
+    "body-parser": "^1.19.0",
+    "ejs": "2.x",
+    "express": "4.x",
     "formidable": "latest",
-    "mysql": "latest",
-    "url": "latest",
     "fs": "latest",
-    "http": "latest"
+    "http": "latest",
+    "multer": "^1.4.1",
+    "mysql": "latest",
+    "url": "latest"
   },
   "author": "",
   "license": "ISC",

@@ -262,7 +262,7 @@ function deletephoto(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if (obj.del == true){
-                window.location.href = "http://localhost:8080/profile.html";
+                window.location.href = "http://localhost:3000/profile.html";
             }
             else{
                 alert("Can't delete this background!!");
@@ -282,7 +282,7 @@ function setback(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if(obj.reply == true){
-            window.location.href = "http://localhost:8080/profile.html";
+            window.location.href = "http://localhost:3000/profile.html";
             }
             else{
                 alert("Can't set as background");

@@ -34,15 +34,61 @@
         <section id="container" style="margin-top: 86.6px;">
             <section id="create" style="margin-top: 86.6px;">
                 <div id = 'formCss'>
-                    <form action="/fileupload" method="POST" enctype="multipart/form-data">
+                    <form action="/save-details" method="POST" enctype="multipart/form-data">
                         <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
                         <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br>
-                        <input id="fileInput" type="file" name="filetoupload"><br>
+                        <input id="fileInput" type="file" name="filetoupload" value="/images/default.png"><br>
                         <label for="tags">Enter Tags (Space Separated)</label>
                         <input type="text" name="tags">
                         <input type="submit" id="submit" value="submit">
                         <!-- style="visibility: hidden; height: 0; width: 0; padding:0;margin: 0; border: 0;"> -->
                     </form>
+                    <script>
+                    (() => {
+                        document.getElementById("fileInput").onchange = () => {
+                          const files = document.getElementById('fileInput').files;
+                          const file = files[0];
+                          if(file == null){
+                            return alert('No file selected.');
+                          }
+                          getSignedRequest(file);
+                        };
+                      })();
+
+                      function getSignedRequest(file){
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        const response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url);
+      }
+      else{
+        alert('Could not get signed URL.');
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url){
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        document.getElementById('preview').src = url;
+        document.getElementById('avatar-url').value = url;
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
+}
+                    </script>
             </div>
             </section>
         </section>
