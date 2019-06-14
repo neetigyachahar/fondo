@@ -12,7 +12,7 @@ app.engine('html', require('ejs').renderFile);
 
 
 const S3_BUCKET = process.env.S3_BUCKET;
-aws.config.region = 'ap-south-1';	
+    aws.config.region = 'us-east-2';	
 
 var con = mysql.createConnection({
     host : "remotemysql.com",
