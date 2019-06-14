@@ -121,7 +121,7 @@ http.createServer(function(req,res){
         else{
         
         if(req.url == '/' || req.url == ''){
-            var sorce = index.html;
+            var sorce = "index.html";
         } 
         else{
             var sorce = req.url.slice(1);
