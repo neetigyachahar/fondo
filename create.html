@@ -34,10 +34,10 @@
         <section id="container" style="margin-top: 86.6px;">
             <section id="create" style="margin-top: 86.6px;">
                 <div id = 'formCss'>
+                    <input id="fileInput" type="file" name="filetoupload"><br>
                     <form action="/save-details" method="POST" enctype="multipart/form-data">
                         <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
                         <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br>
-                        <input id="fileInput" type="file" name="filetoupload"><br>
                         <div id="status"></div>
                         <label for="tags">Enter Tags (Space Separated)</label>
                         <input type="text" name="tags">
