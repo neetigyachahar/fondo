@@ -291,7 +291,6 @@ app.get('/create', function(req, res){
 
 
 app.get('/get_image_name', function(req, res){
-    var form = new formidable.IncomingForm();
     console.log("Mai andar aagaya");
     con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
         if(result.length == 0){
@@ -345,6 +344,7 @@ app.get('/sign-s3', (req, res) => {
   });
 
   app.post('/save-details', (req, res) => {
+    var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
     console.log("qqqqqqqqqqqqqqqqq");
     console.log(req.body);
