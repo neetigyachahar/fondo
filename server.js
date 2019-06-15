@@ -22,7 +22,7 @@ var con = mysql.createConnection({
     database: "IHXn51U10d",
     "port" : "3306"
 });
-var global_SrNo;
+
 // var con = mysql.createConnection({
 //     host : "localhost",
 //     user : "root",
@@ -300,7 +300,6 @@ app.get('/get_image_name', function(req, res){
                 }
             ];
         }
-        global_SrNo = result;
         var send_back = (parseInt(result[0].SrNo)+1);
         res.writeHead(200);
         res.write(`${send_back}`);
@@ -346,6 +345,14 @@ app.get('/sign-s3', (req, res) => {
   app.post('/save-details', (req, res) => {
     var host = req.headers.host;
     var form = new formidable.IncomingForm();
+    con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
+        if(result.length == 0){
+            result = [
+                {
+                    'SrNo' : 0
+                }
+            ];
+        }
     form.parse(req, function(err, fields, files){
     console.log("qqqqqqqqqqqqqqqqq");
     console.log(req.body);
@@ -357,7 +364,7 @@ app.get('/sign-s3', (req, res) => {
         console.log(resultz);
         console.log("sssssssssssssssssss");
         var passwd = fields.Password;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(global_SrNo[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
         con.query(uploadSql, function(err, result){
             if (err)         {           console.log("tttttttttttttttttttttt");  res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
             res.writeHead(200);
@@ -370,7 +377,7 @@ app.get('/sign-s3', (req, res) => {
     else{
         console.log(fields);
         var passwd = resultz[0].userPassword;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(global_SrNo[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
         con.query(uploadSql, function(err, result){
             if (err)      throw err;
             res.writeHead(200);
@@ -381,6 +388,7 @@ app.get('/sign-s3', (req, res) => {
     }
 }
     });
+});
 });
   });
 
