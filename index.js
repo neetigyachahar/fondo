@@ -331,7 +331,7 @@ function getSignedRequest(file){
           if(this.readyState == 4 && this.status == 200){
               console.log("mai andar aagya hun");
               console.log("git it: "+this.responseText);
-            var name_image = `${parseInt(this.responseText)}.${(file.type).split('/')[1]}`; 
+            var name_image = `${this.responseText}.${(file.type).split('/')[1]}`; 
             console.log("At getSignedRequest "+name_image);
             xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
             xhttp.onreadystatechange = () => {
