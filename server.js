@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 const mysql = require('mysql');
 const fs = require('fs');
 const aws = require('aws-sdk');
+var multer = require('multer');
 var upload = multer();
 
 var app = express();
