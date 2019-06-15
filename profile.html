@@ -44,6 +44,7 @@
                         <input type="text" name="tags">
                         <div id="status"></div>
                         <input id="hid" type="hidden" name="UserID">
+                        <input id="type" type="hidden" name="image_type">
                         <input type="submit" onclick="document.getElementById('hid').value = document.getElementById('id').innerText;" value="submit" style="visibility: hidden; height: 0; width: 0; padding:0;margin: 0; border: 0;">
                     </form>
                     <script>
@@ -51,11 +52,10 @@
                             document.getElementById("fileInput").onchange = () => {
                               const files = document.getElementById('fileInput').files;
                               const file = files[0];
-                              console.log(files);
-                              console.log(file);
                               if(file == null){
                                 return alert('No file selected.');
                               }
+                              document.getElementById('type').value = file.type;
                               getSignedRequest(file);
                             };
                           })();

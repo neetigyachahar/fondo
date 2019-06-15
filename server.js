@@ -364,7 +364,7 @@ app.get('/sign-s3', (req, res) => {
         console.log(resultz);
         console.log("sssssssssssssssssss");
         var passwd = fields.Password;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(fields.image_type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
         con.query(uploadSql, function(err, result){
             if (err)         {           console.log("tttttttttttttttttttttt");  res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
             res.writeHead(200);
@@ -377,7 +377,7 @@ app.get('/sign-s3', (req, res) => {
     else{
         console.log(fields);
         var passwd = resultz[0].userPassword;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(fields.image_type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
         con.query(uploadSql, function(err, result){
             if (err)      throw err;
             res.writeHead(200);

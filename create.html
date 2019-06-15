@@ -41,6 +41,7 @@
                         <div id="status"></div>
                         <label for="tags">Enter Tags (Space Separated)</label>
                         <input type="text" name="tags">
+                        <input id="type" type="hidden" name="image_type">
                         <input type="submit" id="submit" value="submit">
                         <!-- style="visibility: hidden; height: 0; width: 0; padding:0;margin: 0; border: 0;"> -->
                     </form>
@@ -54,6 +55,7 @@
                           if(file == null){
                             return alert('No file selected.');
                           }
+                          document.getElementById('type').value = file.type;
                           getSignedRequest(file);
                         };
                       })();
