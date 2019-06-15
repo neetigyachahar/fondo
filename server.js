@@ -344,6 +344,7 @@ app.get('/sign-s3', (req, res) => {
   });
 
   app.post('/save-details', (req, res) => {
+    var host = req.headers.host;
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
     console.log("qqqqqqqqqqqqqqqqq");
