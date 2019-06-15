@@ -3,8 +3,7 @@ var bodyParser = require('body-parser');
 const mysql = require('mysql');
 const fs = require('fs');
 const aws = require('aws-sdk');
-var multer = require('multer');
-var upload = multer();
+const formidable = require('formidable');
 
 var app = express();
 
@@ -47,7 +46,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //form-urlencoded
 
 // for parsing multipart/form-data
-app.use(upload.array()); 
 app.use(express.static('public'));
 
 app.use(function(req, res, next){
@@ -291,11 +289,9 @@ app.get('/create', function(req, res){
     });
 });
 
-// app.post('/upload', function(req, res){
-//     console.log(req.body);
-// });
 
 app.get('/get_image_name', function(req, res){
+    var form = new formidable.IncomingForm();
     console.log("Mai andar aagaya");
     con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
         if(result.length == 0){
@@ -349,6 +345,7 @@ app.get('/sign-s3', (req, res) => {
   });
 
   app.post('/save-details', (req, res) => {
+    form.parse(req, function(err, fields, files){
     console.log("qqqqqqqqqqqqqqqqq");
     console.log(req.body);
     console.log(req.query);
@@ -383,6 +380,7 @@ app.get('/sign-s3', (req, res) => {
     }
 }
     });
+});
   });
 
 app.get('/:d', function(req, res){
