@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 const mysql = require('mysql');
 const fs = require('fs');
 const aws = require('aws-sdk');
+var upload = multer();
 
 var app = express();
 
@@ -50,6 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //form-urlencoded
 
 // for parsing multipart/form-data
+app.use(upload.array()); 
 app.use(express.static('public'));
 
 app.use(function(req, res, next){
