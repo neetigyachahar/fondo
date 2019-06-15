@@ -40,11 +40,6 @@ con.connect(function(err){
     });
 });
 
-app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
- });
-
 app.use(bodyParser.json()); 
 
 // for parsing application/xwww-
@@ -402,5 +397,10 @@ app.get('/:d', function(req, res){
 app.get('*', function(req, res){
     res.send("Invalid request");
 });
+
+app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+ });
 
 app.listen(process.env.PORT || 3000);
