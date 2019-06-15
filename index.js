@@ -326,13 +326,10 @@ function toggleprivacy(elem){
 
 
 function getSignedRequest(file){
-        console.log("get_name invoked");
+    document.getElementById("status").innerHTML = "uploading...";
       xhttp.onreadystatechange = function(){
           if(this.readyState == 4 && this.status == 200){
-              console.log("mai andar aagya hun");
-              console.log("git it: "+this.responseText);
             var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
-            console.log("At getSignedRequest "+name_image);
             xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
             xhttp.onreadystatechange = () => {
             if(xhttp.readyState === 4){
@@ -357,7 +354,7 @@ function getSignedRequest(file){
     xhttp.onreadystatechange = () => {
       if(xhttp.readyState === 4){
         if(xhttp.status === 200){
-         alert("uploaded");
+            document.getElementById("status").innerHTML = "uploaded!";
         }
         else{
           alert('Could not upload file.');
@@ -365,16 +362,4 @@ function getSignedRequest(file){
       }
     };
     xhttp.send(file);
-  }
-  
-  function get_name(){
-      console.log("get_name invoked");
-    xhttp.onreadystatechange = () =>{
-        if(this.status == 4 && this.status == 200){
-            console.log("git it: "+this.responseText);
-            return this.responseText;
-        }
-    }
-    xhttp.open("get", "/get_image_name", true);
-    xhttp.send();
   }

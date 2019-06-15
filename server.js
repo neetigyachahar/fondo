@@ -310,7 +310,7 @@ app.get('/get_image_name', function(req, res){
         console.log(result);
         var send_back = (parseInt(result[0].SrNo)+1);
         res.writeHead(200);
-        res.write(`"${send_back}"`);
+        res.write(`${send_back}`);
         res.end();
 
         });
@@ -351,8 +351,40 @@ app.get('/sign-s3', (req, res) => {
   });
 
   app.post('/save-details', (req, res) => {
-    // TODO: Read POSTed form data and do something useful
-    console.log("might have uploaded");
+    console.log("qqqqqqqqqqqqqqqqq");
+    console.log(req.body);
+    console.log(req.query);
+    que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
+    con.query(que, function(err, resultz){
+        if (err)         {        console.log("rrrrrrrrrrrrrrrrrrrr");     res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+    if(resultz.length == 0){
+        console.log(resultz);
+        console.log("sssssssssssssssssss");
+        var passwd = fields.Password;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", "${passwd}" , '${fields.tags}')`;
+        con.query(uploadSql, function(err, result){
+            if (err)         {           console.log("tttttttttttttttttttttt");  res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+            res.writeHead(200);
+            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
+            res.write(`<script>window.location.href = 'https://${host}/profile.html';</script>` );
+            res.end();
+            }
+        });
+    }
+    else{
+        console.log(fields);
+        var passwd = resultz[0].userPassword;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0,"https://${host}/images/${(parseInt(result[0].SrNo)+1)+'.'+(files.filetoupload.type).split('/')[1]}","Public", 0, "${passwd}" , '${fields.tags}')`;
+        con.query(uploadSql, function(err, result){
+            if (err)      throw err;
+            res.writeHead(200);
+            res.write(`<script>window.location.href = 'https://${host}/profile.html'</script>` );
+            res.end();
+            
+        });
+    }
+}
+    });
   });
 
 app.get('/:d', function(req, res){
