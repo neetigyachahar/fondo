@@ -23,7 +23,7 @@
     "formidable": "latest",
     "fs": "latest",
     "http": "latest",
-    "multer": "^1.4.1",
+    "multer": "latest",
     "mysql": "latest",
     "url": "latest"
   },
