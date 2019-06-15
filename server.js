@@ -14,20 +14,20 @@ app.engine('html', require('ejs').renderFile);
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
-var con = mysql.createConnection({
-    host : "remotemysql.com",
-    user : "IHXn51U10d",
-    password: "ZZ7sxXwnkE",
-    database: "IHXn51U10d",
-    "port" : "3306"
-});
-
 // var con = mysql.createConnection({
-//     host : "localhost",
-//     user : "root",
-//     password: "bharat1@",
-//     database: "FondoBase",
+//     host : "remotemysql.com",
+//     user : "IHXn51U10d",
+//     password: "ZZ7sxXwnkE",
+//     database: "IHXn51U10d",
+//     "port" : "3306"
 // });
+
+var con = mysql.createConnection({
+    host : "localhost",
+    user : "root",
+    password: "bharat1@",
+    database: "FondoBase",
+});
 
 con.connect(function(err){
     if(err) throw err;
@@ -296,6 +296,25 @@ app.get('/create', function(req, res){
 // app.post('/upload', function(req, res){
 //     console.log(req.body);
 // });
+
+app.get('/get_image_name', function(req, res){
+    console.log("Mai andar aagaya");
+    con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
+        if(result.length == 0){
+            result = [
+                {
+                    'SrNo' : 0
+                }
+            ];
+        }
+        console.log(result);
+        var send_back = (parseInt(result[0].SrNo)+1);
+        res.writeHead(200);
+        res.write(`"${send_back}"`);
+        res.end();
+
+        });
+});
 
 app.get('/sign-s3', (req, res) => {
     console.log("reached1");

@@ -320,3 +320,61 @@ function toggleprivacy(elem){
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
 //!!!!!!!!!!!!!!!!!!!!PROFILE JS ENDS!!!!!!!!!!!!!!!!!!!!111
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+//!!!!!!!!!!!!!!!!!!!!CREATE STARTS!!!!!!!!!!!!!!!!!!!!111
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
+
+
+function getSignedRequest(file){
+        console.log("get_name invoked");
+      xhttp.onreadystatechange = function(){
+          if(this.readyState == 4 && this.status == 200){
+              console.log("mai andar aagya hun");
+              console.log("git it: "+this.responseText);
+            var name_image = `${parseInt(this.responseText)}.${(file.type).split('/')[1]}`; 
+            console.log("At getSignedRequest "+name_image);
+            xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
+            xhttp.onreadystatechange = () => {
+            if(xhttp.readyState === 4){
+                if(xhttp.status === 200){
+                const response = JSON.parse(xhttp.responseText);
+                uploadFile(file, response.signedRequest, response.url);
+                }
+                else{
+                alert('Could not get signed URL.');
+            }
+        }
+        };
+        xhttp.send();
+          }
+      }
+      xhttp.open("get", "/get_image_name", true);
+      xhttp.send();
+  }
+  
+  function uploadFile(file, signedRequest, url){
+    xhttp.open('PUT', signedRequest);
+    xhttp.onreadystatechange = () => {
+      if(xhttp.readyState === 4){
+        if(xhttp.status === 200){
+         alert("uploaded");
+        }
+        else{
+          alert('Could not upload file.');
+        }
+      }
+    };
+    xhttp.send(file);
+  }
+  
+  function get_name(){
+      console.log("get_name invoked");
+    xhttp.onreadystatechange = () =>{
+        if(this.status == 4 && this.status == 200){
+            console.log("git it: "+this.responseText);
+            return this.responseText;
+        }
+    }
+    xhttp.open("get", "/get_image_name", true);
+    xhttp.send();
+  }
