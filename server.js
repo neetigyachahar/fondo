@@ -359,19 +359,18 @@ app.get('/sign-s3', (req, res) => {
     console.log(req.query);
     que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
     con.query(que, function(err, resultz){
-        if (err)         {        console.log("rrrrrrrrrrrrrrrrrrrr");     res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+        if (err)  throw err;
     if(resultz.length == 0){
         console.log(resultz);
         console.log("sssssssssssssssssss");
         var passwd = fields.Password;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0,${fields.url},"Public", "${passwd}" , '${fields.tags}')`;
         con.query(uploadSql, function(err, result){
-            if (err)         {           console.log("tttttttttttttttttttttt");  res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+            if (err) throw err;
             res.writeHead(200);
             console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
             res.write(`<script>window.location.href = 'http://${host}/profile.html';</script>` );
             res.end();
-            }
         });
     }
     else{
@@ -386,7 +385,6 @@ app.get('/sign-s3', (req, res) => {
             
         });
     }
-}
     });
 });
 });
