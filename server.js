@@ -365,7 +365,8 @@ app.get('/sign-s3', (req, res) => {
         console.log(resultz);
         console.log("sssssssssssssssssss");
         var passwd = fields.Password;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
+        console.log(uploadSql);
         con.query(uploadSql, function(err, result){
             if (err) throw err;
             res.writeHead(200);
@@ -376,8 +377,9 @@ app.get('/sign-s3', (req, res) => {
     }
     else{
         console.log(fields);
+        console.log(uploadSql);
         var passwd = resultz[0].userPassword;
-        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}')`;
+        var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
             if (err)      throw err;
             res.writeHead(200);

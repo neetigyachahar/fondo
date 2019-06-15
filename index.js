@@ -355,6 +355,7 @@ function getSignedRequest(file){
     xhttp.onreadystatechange = () => {
       if(xhttp.readyState === 4){
         if(xhttp.status === 200){
+            console.log(url);
             document.getElementById("status").innerHTML = "uploaded!";
             document.getElementById("url").value = url;
             document.getElementById("submit").disabled = "";
