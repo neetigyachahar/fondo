@@ -14,20 +14,20 @@ app.engine('html', require('ejs').renderFile);
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
-// var con = mysql.createConnection({
-//     host : "remotemysql.com",
-//     user : "IHXn51U10d",
-//     password: "ZZ7sxXwnkE",
-//     database: "IHXn51U10d",
-//     "port" : "3306"
-// });
-
 var con = mysql.createConnection({
-    host : "localhost",
-    user : "root",
-    password: "bharat1@",
-    database: "FondoBase",
+    host : "remotemysql.com",
+    user : "IHXn51U10d",
+    password: "ZZ7sxXwnkE",
+    database: "IHXn51U10d",
+    "port" : "3306"
 });
+
+// var con = mysql.createConnection({
+//     host : "localhost",
+//     user : "root",
+//     password: "bharat1@",
+//     database: "FondoBase",
+// });
 
 con.connect(function(err){
     if(err) throw err;
