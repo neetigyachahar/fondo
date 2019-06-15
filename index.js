@@ -262,7 +262,7 @@ function deletephoto(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if (obj.del == true){
-                window.location.href = "http://localhost:3000/profile.html";
+                window.location.href = "http://fondo.xyz/profile.html";
             }
             else{
                 alert("Can't delete this background!!");
@@ -282,7 +282,7 @@ function setback(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if(obj.reply == true){
-            window.location.href = "http://localhost:3000/profile.html";
+            window.location.href = "http://fondo.xyz/profile.html";
             }
             else{
                 alert("Can't set as background");
@@ -327,6 +327,7 @@ function toggleprivacy(elem){
 
 function getSignedRequest(file){
     document.getElementById("status").innerHTML = "uploading...";
+    document.getElementById("submit").disabled = "true";
       xhttp.onreadystatechange = function(){
           if(this.readyState == 4 && this.status == 200){
             var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
@@ -355,6 +356,8 @@ function getSignedRequest(file){
       if(xhttp.readyState === 4){
         if(xhttp.status === 200){
             document.getElementById("status").innerHTML = "uploaded!";
+            document.getElementById("url").value = url;
+            document.getElementById("submit").disabled = "";
         }
         else{
           alert('Could not upload file.');
