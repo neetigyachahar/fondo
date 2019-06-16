@@ -326,7 +326,6 @@ function toggleprivacy(elem){
 
 
 function getSignedRequest(file){
-    document.getElementById("status").innerHTML = "uploading...";
     document.getElementById("submit").disabled = "true";
       xhttp.onreadystatechange = function(){
           if(this.readyState == 4 && this.status == 200){
@@ -357,7 +356,6 @@ function getSignedRequest(file){
         if(xhttp.status === 200){
             console.log(url);
             document.getElementById("url").value = url;
-            document.getElementById("status").innerHTML = "uploaded!";
             document.getElementById("submit").disabled = "";
         }
         else{
