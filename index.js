@@ -356,8 +356,8 @@ function getSignedRequest(file){
       if(xhttp.readyState === 4){
         if(xhttp.status === 200){
             console.log(url);
-            document.getElementById("status").innerHTML = "uploaded!";
             document.getElementById("url").value = url;
+            document.getElementById("status").innerHTML = "uploaded!";
             document.getElementById("submit").disabled = "";
         }
         else{
@@ -365,5 +365,10 @@ function getSignedRequest(file){
         }
       }
     };
+    xhttp.upload.addEventListener("progress", function(evt){
+        if (evt.lengthComputable) {
+          console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+        }
+      }, false);
     xhttp.send(file);
   }

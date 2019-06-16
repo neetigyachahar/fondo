@@ -80,13 +80,13 @@ ul {
 
 #feed article{
     display: inline-block;
-    background-color:#f3f3ef;
+    background-color:rgba(0, 0, 0, 0.5);
     width: 95%;
     max-width: 1010px;
     padding: 7px;
     box-shadow: 0px 0px 20px 3px;
-    margin-bottom: 5px;
-    padding-bottom: 20px;
+    margin-bottom: 200px;
+    padding-bottom: 10px;
 }
 
 #feed article header{
@@ -97,6 +97,7 @@ ul {
 }
 #feed article p{
   font-size: 20px;
+  color: white;
   padding: 2px;
   border: 2px dotted;
   border-top: none;

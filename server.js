@@ -15,20 +15,20 @@ app.engine('html', require('ejs').renderFile);
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
-var con = mysql.createConnection({
-    host : "remotemysql.com",
-    user : "IHXn51U10d",
-    password: "ZZ7sxXwnkE",
-    database: "IHXn51U10d",
-    "port" : "3306"
-});
-
 // var con = mysql.createConnection({
-//     host : "localhost",
-//     user : "root",
-//     password: "bharat1@",
-//     database: "FondoBase",
+//     host : "remotemysql.com",
+//     user : "IHXn51U10d",
+//     password: "ZZ7sxXwnkE",
+//     database: "IHXn51U10d",
+//     "port" : "3306"
 // });
+
+var con = mysql.createConnection({
+    host : "localhost",
+    user : "root",
+    password: "bharat1@",
+    database: "FondoBase",
+});
 
 con.connect(function(err){
     if(err) throw err;
@@ -55,7 +55,7 @@ app.use(function(req, res, next){
         var ki = JSON.parse(req.query.module);
         switch (Object.keys(ki)[0]) {
             case 'search':{fs.readFile('SearchResult.html','utf8', function(err, file){
-                            if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                            if (err) throw err;
                             var obj = {
                                 'html': file,
                                 'UserID': null,
@@ -65,7 +65,7 @@ app.use(function(req, res, next){
                             console.log(`SELECT * FROM photobase WHERE UserID = ${ki.search}`);
                             console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
                             con.query(`SELECT * FROM photobase WHERE UserID = ${ki.search} AND PhotoPrivacy = 'Public'`, function(err, result){
-                                if (err)         {      console.log(err);       res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err) throw err;
                                 console.log("__________________________"+(result)+"sfsf");
                                 if((result).length == 0){
                                     console.log("fdzvfmofvnajfnv+++++++++++++++++++++++++");
@@ -87,9 +87,7 @@ app.use(function(req, res, next){
                                     res.write(JSON.stringify(obj));
                                     res.end();
                                 }
-                            }
                             });
-                        }
                             });
                             break;}
             case 'profile':{
@@ -101,7 +99,7 @@ app.use(function(req, res, next){
                 console.log(`SELECT * FROM photobase WHERE UserID = ${ki.profile}`);
                 con.query(`SELECT * FROM photobase WHERE UserID = ${ki.profile}`, function(err, result){
                     console.log("3333333333");
-                    if (err)         {    console.log("444444444444");         res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err)  throw err;
                         console.log("55555555555555");
                         console.log(result);
                     if(result.length === 0){
@@ -119,7 +117,6 @@ app.use(function(req, res, next){
                         res.write(JSON.stringify(obj));
                         res.end();
                     }
-                }
                 });         
                 break;
             }
@@ -129,7 +126,7 @@ app.use(function(req, res, next){
                 var que = `SELECT userPassword FROM photobase WHERE UserID = ${parseInt(ki.password[0])}`;
                 console.log(que);
                 con.query(que, function(err, results){
-                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err)   throw err;
                     var obj = {
                         "auth": null
                     }
@@ -142,7 +139,6 @@ app.use(function(req, res, next){
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     res.write(JSON.stringify(obj));
                     res.end();
-                }
                 });
                 break;
             }
@@ -150,7 +146,7 @@ app.use(function(req, res, next){
             case "delete":{
                 var que = `DELETE FROM photobase WHERE SrNo = ${ki.delete}`;
                 con.query(que, function(err, result){
-                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err) throw err;
                     if (result.affectedRows == 1){
                         res.writeHead(200);
                         res.write(JSON.stringify({"del":true}));
@@ -161,7 +157,6 @@ app.use(function(req, res, next){
                         res.write(JSON.stringify({"del":false}));
                         res.end();
                     }
-                }
                 });
                 break;
             }
@@ -169,22 +164,21 @@ app.use(function(req, res, next){
             case "togglePrivacy" : {
                 var que = `SELECT * FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
                 con.query(que, function(err, result){
-                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err) throw err;
                     var privacy = "Only me";
                     if (result[0].PhotoPrivacy == "Only me"){
                         privacy = "Public";
                     }
                     que = `UPDATE photobase SET PhotoPrivacy = "${privacy}" WHERE SrNo = ${ki.togglePrivacy}`;
                     con.query(que, function(err, result){
-                        if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                        if (err)    throw err;
                         if (result.affectedRows == 1){
                             que = `SELECT PhotoPrivacy, uploaded_at FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
                             con.query(que, function(err, result){
-                                if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err)  throw err;
                                 res.writeHead(200);
                                 res.write(JSON.stringify(result));
                                 res.end();
-                                }
                             });
                         }
                         else{
@@ -192,57 +186,50 @@ app.use(function(req, res, next){
                             res.write("Some error occurred!");
                             res.end();
                         }
-                    }
                     });
-                }
                 });
                 break;
             }
             case "setback" : {
                 var que = `UPDATE photobase SET SetWallpaper = 0 WHERE UserID = ${ki.UserID} AND SetWallpaper = 1`
                 con.query(que, function(err){
-                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err)   throw err;
                     que = `SELECT * FROM photobase WHERE SrNo = ${ki.setback}`
                     con.query(que, function(err, result){
-                        if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                        if (err)   throw err;
                         if(result[0].UserID == ki.UserID){
                             que = `UPDATE photobase SET SetWallpaper = 1 WHERE SrNo = ${ki.setback}`
                             con.query(que, function(err, result1){
-                                if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err)   throw err;
                                 res.writeHead(200);
                                 res.write(JSON.stringify({'reply':true}));
                                 res.end();
-                            }
                             });
                         }
                         else{
                             que = `SELECT userPassword FROM photobase WHERE UserID = ${ki.UserID}`
                             con.query( que , function(err, pass){
-                                if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                if (err)  throw err;
                                 console.log(result[0].uploaded_at);
                                 var t = result[0].uploaded_at;
                                 console.log(t.toUTCString());
                                 que = `INSERT INTO photobase (UserID, link, upvotes, PhotoPrivacy, SetWallpaper, userPassword, tags ) values (${ki.UserID}, "${result[0].link}", ${result[0].upvotes}, "${result[0].PhotoPrivacy}", 1, "${pass[0].userPassword}", "${result[0].tags}")`;
                                 con.query(que, function(err, abcd){
-                                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                                    if (err) throw err;
                                     res.writeHead(200);
                                     res.write(JSON.stringify({'reply':true}));
                                     res.end();
-                                }
                                 });
-                            }
                             });
                         }
-                    }
                     });
-                }
                 });
                 break;
             }
             case "checkID" : {
                 var que = `SELECT COUNT(*) FROM photobase WHERE UserID = ${ki.checkID}`;
                 con.query(que, function(err, result){
-                    if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
+                    if (err)  throw err;
                     var bool;
                     if(result[0]["COUNT(*)"] != 0){
                         bool = 'true';
@@ -253,7 +240,6 @@ app.use(function(req, res, next){
                     res.writeHead(200);
                     res.write(bool);
                     res.end();
-                }
                 });
                 break;
             }
