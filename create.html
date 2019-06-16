@@ -38,7 +38,9 @@
                     <form action="/save-details" method="POST" enctype="multipart/form-data">
                         <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
                         <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br>
-                        <div id="status"></div>
+                        <div id="myProgress">
+                            <div id="myBar"></div>
+                          </div>
                         <label for="tags">Enter Tags (Space Separated)</label>
                         <input type="text" name="tags">
                         <input id="type" type="hidden" name="image_type">

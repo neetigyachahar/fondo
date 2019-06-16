@@ -365,10 +365,18 @@ function getSignedRequest(file){
         }
       }
     };
+
+    var width = 0;
+    elem.style.width = width + '%';
+
     xhttp.upload.addEventListener("progress", function(evt){
         if (evt.lengthComputable) {
           console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+          var elem = document.getElementById("myBar"); 
+          width = parseInt(evt.loaded/evt.total);
+          elem.style.width = width + '%';
         }
       }, false);
     xhttp.send(file);
   }
+
