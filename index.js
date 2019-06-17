@@ -364,6 +364,7 @@ function getSignedRequest(file){
       }
     };
 
+    var elem = document.getElementById("myBar"); 
     var width = 0;
     elem.style.width = width + '%';
 
