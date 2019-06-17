@@ -215,7 +215,7 @@ function getCookie(cname) {
 function profile(){
     document.getElementById('id').innerText = getCookie("ProfileID");
     var id = document.getElementById('id').innerText;
-    if(id != ''){
+    if(id.length != 0){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(xhttp.responseText);
