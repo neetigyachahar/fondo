@@ -372,7 +372,7 @@ function getSignedRequest(file){
         if (evt.lengthComputable) {
           console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
           var elem = document.getElementById("myBar"); 
-          width = parseInt(evt.loaded/evt.total);
+          width = parseInt(evt.loaded/evt.total)*100;
           elem.style.width = width + '%';
         }
       }, false);
