@@ -215,6 +215,7 @@ function getCookie(cname) {
 function profile(){
     document.getElementById('id').innerText = getCookie("ProfileID");
     var id = document.getElementById('id').innerText;
+    if(id != ''){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(xhttp.responseText);
@@ -241,6 +242,7 @@ function profile(){
             }
         }
     };
+}
 
     var obj = {
         'profile' : id
@@ -371,6 +373,7 @@ function getSignedRequest(file){
           width = (evt.loaded/evt.total)*100;
           console.log(width);
           elem.style.width = width + '%';
+          document.getElementById("myProgress").innerHTML += Math.round(height)+"%";
         }
       }, false);
     xhttp.send(file);
