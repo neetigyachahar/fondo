@@ -326,7 +326,6 @@ function toggleprivacy(elem){
 
 
 function getSignedRequest(file){
-    document.getElementById("submit").disabled = "true";
       xhttp.onreadystatechange = function(){
           if(this.readyState == 4 && this.status == 200){
             var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
@@ -356,7 +355,7 @@ function getSignedRequest(file){
         if(xhttp.status === 200){
             console.log(url);
             document.getElementById("url").value = url;
-            document.getElementById("submit").disabled = "";
+            document.getElementById("sd").disabled = "";
         }
         else{
           alert('Could not upload file.');
@@ -369,7 +368,7 @@ function getSignedRequest(file){
         if (evt.lengthComputable) {
           console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
           var elem = document.getElementById("myBar"); 
-          width = parseInt(evt.loaded/evt.total)*100;
+          width = (evt.loaded/evt.total)*100;
           console.log(width);
           elem.style.width = width + '%';
         }
