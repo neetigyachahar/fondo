@@ -281,6 +281,18 @@ ul {
   }
 
   
+  #myProgress {
+    width: 100%;
+    background-color: grey;
+  }
+  
+  #myBar {
+    width: 1%;
+    height: 30px;
+    background-color: green;
+  }
+
+  
 
 /* //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
   //!!!!!!!!!!!!!!!!!!!!PROFILE CSS Ends!!!!!!!!!!!!!!!!!!!!111
@@ -333,15 +345,4 @@ ul {
       text-align: center;
       border-bottom: 3px solid black;
     }
-  }
-
-  #myProgress {
-    width: 100%;
-    background-color: grey;
-  }
-  
-  #myBar {
-    width: 1%;
-    height: 30px;
-    background-color: green;
   }

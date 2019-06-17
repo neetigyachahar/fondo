@@ -257,14 +257,7 @@ app.use(function(req, res, next){
     }
     });
 
-app.get('/', function(req, res){
-    fs.readFile("index.html", 'utf8', function(err, result){
-        if(err) throw err;
-        res.writeHead(200);
-        res.write(result);
-        res.end();
-    }); 
-});
+app.get('/', function(req, res){res.render('index.html');});
 
 app.get('/create', function(req, res){
     fs.readFile("create.html", 'utf8', function(err, result){
@@ -379,12 +372,15 @@ app.get('/sign-s3', (req, res) => {
 });
   });
 
-app.get('/:d', function(req, res){
+app.get('/profile', function(req, res){res.render('profile.html');});
+
+app.get('/:d', function(req, res, next){
     fs.readFile(req.params.d, 'utf8', function(err, result){
-        if(err) throw err;
+        if(err) next();
+        else{
         res.writeHead(200);
         res.write(result);
-        res.end();
+        res.end();}
     });
 });
 
@@ -392,7 +388,7 @@ app.get('*', function(req, res){
     res.send("Invalid request");
 });
 
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
     console.error(err.stack);
     res.status(500).send('Something broke!');
  });
