@@ -41,7 +41,7 @@
                             <fieldset id="sd">
                                 <legend>Welcome new user</legend>
                                 <form id = "meraForm" action="/save-details" method="POST" enctype="multipart/form-data">
-                                    <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
+                                    <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"></p></b><br>
                                     <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br><br>
                                     <label for="tags">Enter Tags (Space Separated)</label>
                                     <input type="text" class="passInput" name="tags">
@@ -62,6 +62,11 @@
                     <script>
                     (() => {
                         document.getElementById("fileInput").onchange = () => {
+                            if(document.getElementById('test').innerText.length == 0){
+                                alert("Correct your ID");
+                                document.getElementById('fileInput').value = "";
+                                return;
+                            }
                             if(document.getElementById('newID').value.length == 0){
                                 alert("Enter ID to continue.");
                                 document.getElementById('fileInput').value = "";

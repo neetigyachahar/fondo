@@ -357,7 +357,6 @@ function getSignedRequest(file){
         if(xhttp.status === 200){
             console.log(url);
             document.getElementById("url").value = url;
-            document.getElementById("sd").disabled = "";
             document.forms["meraForm"].submit();
         }
         else{
