@@ -355,8 +355,10 @@ app.get('/sign-s3', (req, res) => {
         });
     }
     else{
+        console.log("+++++++++++++++++++++++++++-----------------------------");
         console.log(fields);
         console.log(uploadSql);
+        console.log("+++++++++++++++++++++++++++-----------------------------");
         var passwd = resultz[0].userPassword;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
