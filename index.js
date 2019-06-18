@@ -374,7 +374,7 @@ function getSignedRequest(file){
           width = (evt.loaded/evt.total)*100;
           console.log(width);
           elem.style.width = width + '%';
-          document.getElementById("myProgress").innerHTML += Math.round(width)+"%";
+          document.getElementById("myProgress").innerHTML = Math.round(width)+"%";
         }
       }, false);
     xhttp.send(file);
