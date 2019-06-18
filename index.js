@@ -136,7 +136,7 @@ function checkNewID(){
     input.addEventListener("keyup", function(event){
         if(parseInt(input.value) != input.value){
             output.innerText = "Only numbers allowed";
-            document.getElementById('submit').disabled = "true";
+            document.getElementById('submitit').disabled = "true";
         }
         else{
             output.innerText = " ";
@@ -147,11 +147,11 @@ function checkNewID(){
                     console.log(obj);
                     if(obj == "true"){
                         output.innerText = "ID already exists";
-                        document.getElementById('submit').disabled = "true";    
+                        document.getElementById('submitit').disabled = "true";    
                     }
                     else{
                         output.innerText = " ";
-                        document.getElementById('submit').disabled = "";   
+                        document.getElementById('submitit').disabled = "";   
                     }
                 }
             };
@@ -163,7 +163,7 @@ function checkNewID(){
         }
         if(input.value == ""){
             output.innerText = "";
-            document.getElementById('submit').disabled = "";
+            document.getElementById('submitit').disabled = "";
         }
     });
 }
@@ -374,7 +374,7 @@ function getSignedRequest(file){
           width = (evt.loaded/evt.total)*100;
           console.log(width);
           elem.style.width = width + '%';
-          document.getElementById("myProgress").innerHTML += Math.round(height)+"%";
+          document.getElementById("myProgress").innerHTML += Math.round(width)+"%";
         }
       }, false);
     xhttp.send(file);
