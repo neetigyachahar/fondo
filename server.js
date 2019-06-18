@@ -350,7 +350,7 @@ app.get('/sign-s3', (req, res) => {
             if (err) throw err;
             res.writeHead(200);
             console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-            res.write(`<script>window.location.href = 'https://${host}/profile.html';</script>` );
+            res.write(`<script>window.location.href = 'https://${host}/profile';</script>` );
             res.end();
         });
     }
@@ -362,7 +362,7 @@ app.get('/sign-s3', (req, res) => {
         con.query(uploadSql, function(err, result){
             if (err)      throw err;
             res.writeHead(200);
-            res.write(`<script>window.location.href = 'https://${host}/profile.html'</script>` );
+            res.write(`<script>window.location.href = 'https://${host}/profile'</script>` );
             res.end();
             
         });
