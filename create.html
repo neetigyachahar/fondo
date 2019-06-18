@@ -62,7 +62,7 @@
                     <script>
                     (() => {
                         document.getElementById("fileInput").onchange = () => {
-                            if(document.getElementById('test').innerText.length == 0){
+                            if(document.getElementById('test').innerText.length != 0){
                                 alert("Correct your ID");
                                 document.getElementById('fileInput').value = "";
                                 return;
