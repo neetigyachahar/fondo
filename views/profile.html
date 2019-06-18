@@ -42,10 +42,8 @@
             <div id = 'formCss' style="visibility: hidden;">
                     <input id="fileInput" type="file" name="filetoupload"><br>
                     <form action="/save-details" method="POST" enctype="multipart/form-data">
-                        <input id="fileInput" type="file" name="filetoupload"><br>
                         <label for="tags">Enter Tags (Space Separated)</label>
                         <input type="text" name="tags">
-                        <div id="status"></div>
                         <input id="hid" type="hidden" name="UserID">
                         <input type="hidden" id="url" name="url">
                         <input id="type" type="hidden" name="image_type">
@@ -59,6 +57,11 @@
                               if(file == null){
                                 return alert('No file selected.');
                               }
+                              if(file.type != "image"){
+                              alert("Please enter images");
+                              document.getElementById('fileInput').value = "";
+                              return;
+                          }
                               document.getElementById('type').value = file.type;
                               getSignedRequest1(file);
                             };

@@ -77,6 +77,12 @@
                           if(file == null){
                             return alert('No file selected.');
                           }
+                          console.log(file.type);
+                          if(file.type != "image"){
+                              alert("Please enter images");
+                              document.getElementById('fileInput').value = "";
+                              return;
+                          }
                           document.getElementById('type').value = file.type;
                           getSignedRequest(file);
                         };
