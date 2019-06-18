@@ -40,18 +40,25 @@
                 ID : <span id="id">No ID added to profile.</span>
             </header>
             <div id = 'formCss' style="visibility: hidden;">
+                <div id="form">
                     <input id="fileInput" type="file" name="filetoupload"><br>
-                    <form action="/save-details" method="POST" enctype="multipart/form-data">
-                        <label for="tags">Enter Tags (Space Separated)</label>
+                    <div id="myProgress">
+                            <div id="myBar"></div>
+                            <div id="per"></div>
+                        </div><br>
+                    <form id = "form" action="/save-details" method="POST" enctype="multipart/form-data">
+                        <label for="tags">Enter Tags (Space Separated)</label><br>
                         <input type="text" name="tags">
                         <input id="hid" type="hidden" name="UserID">
                         <input type="hidden" id="url" name="url">
                         <input id="type" type="hidden" name="image_type">
-                        <input type="submit" onclick="document.getElementById('hid').value = document.getElementById('id').innerText;" value="submit">
+                        <input type="submit" id="dedo" value="submit">
                     </form>
+                </div>
                     <script>
                         (() => {
-                            document.getElementById("fileInput").onchange = () => {
+                            document.getElementById("dedo").onclick = () => {
+                              document.getElementById('hid').value = document.getElementById('id').innerText;
                               const files = document.getElementById('fileInput').files;
                               const file = files[0];
                               if(file == null){
@@ -63,7 +70,7 @@
                               return;
                           }
                               document.getElementById('type').value = file.type;
-                              getSignedRequest1(file);
+                              getSignedRequest(file);
                             };
                           })();
                         </script>
