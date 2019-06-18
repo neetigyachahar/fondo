@@ -43,7 +43,7 @@
                                 <form id = "meraForm" action="/save-details" method="POST" enctype="multipart/form-data">
                                     <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"></p></b><br>
                                     <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br><br>
-                                    <label for="tags">Enter Tags (Space Separated)</label>
+                                    <label for="tags">Enter Tags (Space Separated)</label><br>
                                     <input type="text" class="passInput" name="tags">
                                     <input id="type" type="hidden" name="image_type">
                                     <input type="hidden" id="url" name="url">
@@ -77,8 +77,8 @@
                           if(file == null){
                             return alert('No file selected.');
                           }
-                          console.log(file.type);
-                          if(file.type != "image"){
+                          console.log(file.type.split('/')[0]);
+                          if(file.type.split('/')[0] != "image"){
                               alert("Please enter images");
                               document.getElementById('fileInput').value = "";
                               return;

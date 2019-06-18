@@ -57,7 +57,7 @@
                               if(file == null){
                                 return alert('No file selected.');
                               }
-                              if(file.type != "image"){
+                              if(file.type.split('/')[0] != "image"){
                               alert("Please enter images");
                               document.getElementById('fileInput').value = "";
                               return;
