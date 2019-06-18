@@ -373,6 +373,8 @@ app.get('/sign-s3', (req, res) => {
   });
 
 app.get('/profile', function(req, res){res.render('profile.html');});
+app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
+app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 
 app.get('/:d', function(req, res, next){
     fs.readFile(req.params.d, 'utf8', function(err, result){

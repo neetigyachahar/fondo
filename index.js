@@ -213,11 +213,10 @@ function getCookie(cname) {
 
 
 function profile(){
-    var id = document.getElementById('id').innerText;
-    if(getCookie("ProfileID").length != 0){
-        document.getElementById('formCss').style = "visibility = visible;";
-        id = getCookie("ProfileID");}
-    if(typeof(id) == 'number' && id.length  != 0){
+    var id = document.getElementById('id');
+    var pro = getCookie("ProfileID");
+    if(pro.length != 0){
+    document.getElementById('formCss').style = "visibility: visible;";
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(xhttp.responseText);
@@ -228,6 +227,7 @@ function profile(){
                 document.getElementById('PROcontainerHead').innerHTML = "No Data!";
             }
             else{
+                id.innerText = pro;
                 for (var i = 0; i<obj.PhotoData.length ; i++){
                     append(obj.PhotoData[i].SrNo);
                     document.getElementById(obj.PhotoData[i].SrNo).childNodes[1].src = obj.PhotoData[i].link;
@@ -244,7 +244,7 @@ function profile(){
 
 
     var obj = {
-        'profile' : id
+        'profile' : pro
     };
     console.log(obj);
     xhttp.open("get", "?module=" + JSON.stringify(obj), true);
@@ -264,7 +264,7 @@ function deletephoto(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if (obj.del == true){
-                window.location.href = "https://fondo.xyz/profile.html";
+                window.location.href = "https://www.fondo.xyz/profile";
             }
             else{
                 alert("Can't delete this background!!");
@@ -284,7 +284,7 @@ function setback(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if(obj.reply == true){
-            window.location.href = "https://fondo.xyz/profile.html";
+            window.location.href = "https://fondo.xyz/profile";
             }
             else{
                 alert("Can't set as background");

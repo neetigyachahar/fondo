@@ -308,10 +308,10 @@ ul {
         height:auto;
         visibility: visible;
         color: white;
-        font-size: 25px;
+        font-size: 20px;
         float: right;
-        margin: 10px 15px 7px;
-        padding:3px 6px 6px 6px;
+        margin: 13px 15px 7px;
+        padding:2px 4px 4px 4px;
         border: 2px solid white;
         border-radius: 9px;
     }
