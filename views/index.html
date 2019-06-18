@@ -52,10 +52,40 @@
                     <header>
                          <h3>Facebook Updates</h3>
                     </header>
-                <br>
-                <div class="fb-page" data-href="https://www.facebook.com/ZeeNews" data-tabs="timeline" container-width="true" data-width="500" data-small-header="true"  data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ZeeNews" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ZeeNews">Zee News</a></blockquote></div>
-                <div class="fb-page" data-href="https://www.facebook.com/venturesity.vit/" data-tabs="timeline" container-width="true" data-width="550" data-small-header="true"  data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ZeeNews" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ZeeNews">Zee News</a></blockquote></div>
+                    <button class="accordion">Section 1</button>
+                    <div class="panel">
+                            <div class="fb-page" data-href="https://www.facebook.com/ZeeNews" data-tabs="timeline" container-width="true" data-width="320" data-small-header="true"  data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ZeeNews" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ZeeNews">Zee News</a></blockquote></div>
+                            <div class="fb-page" data-href="https://www.facebook.com/venturesity.vit/" data-tabs="timeline" container-width="true" data-width="500" data-small-header="true"  data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ZeeNews" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ZeeNews">Zee News</a></blockquote></div>
+                    </div>
+                    
+                    <button class="accordion">Section 2</button>
+                    <div class="panel">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+                    
+                    <button class="accordion">Section 3</button>
+                    <div class="panel">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    </div>
+               
                 </article>
+
+<script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+        
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+              panel.style.display = "none";
+            } else {
+              panel.style.display = "block";
+            }
+          });
+        }
+        </script>
                 <article>
                     <header>
                         <h3>This is the first news!</h3>
