@@ -38,31 +38,36 @@
             <section id="create" style="margin-top: 86.6px;">
                 <div id = 'formCss'>
                     <div id="form">
-                        <input id="fileInput" type="file" name="filetoupload"><br>
-                            <fieldset id="sd" disabled="disabled">
+                            <fieldset id="sd">
                                 <legend>Welcome new user</legend>
-                                <form action="/save-details" method="POST" enctype="multipart/form-data">
+                                <form id = "meraForm" action="/save-details" method="POST" enctype="multipart/form-data">
                                     <input id="newID" class="passInput" type="text" name="UserID" placeholder="Enter new ID [numerical]"> <b><p id="test"> </p></b><br>
                                     <input type="password" class="passInput" name="Password" placeholder="Enter new password (optional)"><br>
-                                    <div id="myProgress">
-                                        <div id="myBar"></div>
-                                    </div>
                                     <label for="tags">Enter Tags (Space Separated)</label>
                                     <input type="text" name="tags">
                                     <input id="type" type="hidden" name="image_type">
                                     <input type="hidden" id="url" name="url">
-                                    <input type="submit" id="submit" value="submit">
+                                    <input type="submit" style="display: none;" id="submit" value="submit">
                                     <!-- style="visibility: hidden; height: 0; width: 0; padding:0;margin: 0; border: 0;"> -->
                                 </form>
+                                <hr style="margin: 10px; color: black;">
+                                <label for="fileInput">Select an image to submit!</label>
+                                <input id="fileInput" type="file" name="filetoupload"><br>
+                                <div id="myProgress">
+                                    <div id="myBar"></div>
+                                </div>
                             </fieldset>
                         </div>
                     <script>
                     (() => {
                         document.getElementById("fileInput").onchange = () => {
+                            if(document.getElementById('newID').value.length == 0){
+                                alert("Enter ID to continue.");
+                                document.getElementById('fileInput').value = "";
+                                return;
+                            }
                           const files = document.getElementById('fileInput').files;
                           const file = files[0];
-                          console.log(files);
-                          console.log(file);
                           if(file == null){
                             return alert('No file selected.');
                           }

@@ -345,4 +345,17 @@ ul {
       text-align: center;
       border-bottom: 3px solid black;
     }
+
+    #form{
+      max-width: 370px;
+      min-width: 340px;
+    }
+    #sd{
+      min-width: 340px;
+      max-width: 370px;
+    }
+    #formCss{
+      min-width: 340px;
+      max-width: 370px;
+    }
   }
