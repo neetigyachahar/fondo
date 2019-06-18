@@ -318,56 +318,56 @@ function toggleprivacy(elem){
     xhttp.send();
 }
 
-// function getSignedRequest1(file){
-//     xhttp.onreadystatechange = function(){
-//         if(this.readyState == 4 && this.status == 200){
-//           var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
-//           xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
-//           xhttp.onreadystatechange = () => {
-//           if(xhttp.readyState === 4){
-//               if(xhttp.status === 200){
-//               const response = JSON.parse(xhttp.responseText);
-//               uploadFile1(file, response.signedRequest, response.url);
-//               }
-//               else{
-//               alert('Could not get signed URL.');
-//           }
-//       }
-//       };
-//       xhttp.send();
-//         }
-//     }
-//     xhttp.open("get", "/get_image_name", true);
-//     xhttp.send();
-// }
+function getSignedRequest1(file){
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+          var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
+          xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
+          xhttp.onreadystatechange = () => {
+          if(xhttp.readyState === 4){
+              if(xhttp.status === 200){
+              const response = JSON.parse(xhttp.responseText);
+              uploadFile1(file, response.signedRequest, response.url);
+              }
+              else{
+              alert('Could not get signed URL.');
+          }
+      }
+      };
+      xhttp.send();
+        }
+    }
+    xhttp.open("get", "/get_image_name", true);
+    xhttp.send();
+}
 
-// function uploadFile1(file, signedRequest, url){
-//   xhttp.open('PUT', signedRequest);
-//   xhttp.onreadystatechange = () => {
-//     if(xhttp.readyState === 4){
-//       if(xhttp.status === 200){
-//           console.log(url);
-//           document.getElementById("url").value = url;
-//       }
-//       else{
-//         alert('Could not upload file.');
-//       }
-//     }
-//   };
+function uploadFile1(file, signedRequest, url){
+  xhttp.open('PUT', signedRequest);
+  xhttp.onreadystatechange = () => {
+    if(xhttp.readyState === 4){
+      if(xhttp.status === 200){
+          console.log(url);
+          document.getElementById("url1").value = url;
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
 
 
-//   xhttp.upload.addEventListener("progress", function(evt){
-//       if (evt.lengthComputable) {
-//         console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
-//         var elem = document.getElementById("myBar"); 
-//         width = (evt.loaded/evt.total)*100;
-//         console.log(width);
-//         elem.style.width = width + '%';
-//         document.getElementById("per").innerHTML = Math.round(width)+"%";
-//       }
-//     }, false);
-//   xhttp.send(file);
-// }
+  xhttp.upload.addEventListener("progress", function(evt){
+      if (evt.lengthComputable) {
+        console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
+        var elem = document.getElementById("myBar"); 
+        width = (evt.loaded/evt.total)*100;
+        console.log(width);
+        elem.style.width = width + '%';
+        document.getElementById("per").innerHTML = Math.round(width)+"%";
+      }
+    }, false);
+  xhttp.send(file);
+}
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
 //!!!!!!!!!!!!!!!!!!!!PROFILE JS ENDS!!!!!!!!!!!!!!!!!!!!111

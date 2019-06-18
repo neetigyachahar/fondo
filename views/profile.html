@@ -50,8 +50,8 @@
                         <label for="tags">Enter Tags (Space Separated)</label><br>
                         <input type="text" name="tags">
                         <input id="hid" type="hidden" name="UserID">
-                        <input type="hidden" id="url" name="url">
-                        <input id="type" type="hidden" name="image_type">
+                        <input type="hidden" id="url1" name="url">
+                        <input id="type1" type="hidden" name="image_type">
                         <input type="submit" id="dedo" value="submit">
                     </form>
                 </div>
@@ -69,8 +69,8 @@
                               document.getElementById('fileInput').value = "";
                               return;
                           }
-                              document.getElementById('type').value = file.type;
-                              getSignedRequest(file);
+                              document.getElementById('type1').value = file.type;
+                              getSignedRequest1(file);
                             };
                           })();
                         </script>
