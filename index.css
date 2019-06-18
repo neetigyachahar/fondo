@@ -128,7 +128,7 @@ ul {
   padding: 5px;
   font-size: 18px;
   color: white;
-  min-width: 320px;
+  min-width: 280px;
   max-width: 650px;
   margin: 5px;
   outline: none;
@@ -348,12 +348,12 @@ ul {
 
     #form{
       text-align: center;
-      max-width: 370px;
+      max-width: 380px;
       min-width: 340px;
     }
     #sd{
       text-align: center;
       min-width: 340px;
-      max-width: 370px;
+      max-width: 380px;
     }
   }
