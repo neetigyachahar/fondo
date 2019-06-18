@@ -354,6 +354,7 @@ function uploadFile1(file, signedRequest, url){
         console.log("yo");
           console.log(url);
           document.getElementById("url1").value = url;
+          document.forms["meraForm1"].submit();          
       }
       else{
         alert('Could not upload file.');
