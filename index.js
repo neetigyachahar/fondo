@@ -358,7 +358,7 @@ function getSignedRequest(file){
             console.log(url);
             document.getElementById("url").value = url;
             document.getElementById("sd").disabled = "";
-            document.forms("meraForm").submit();
+            document.forms["meraForm"].submit();
         }
         else{
           alert('Could not upload file.');
