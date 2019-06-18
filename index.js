@@ -213,9 +213,11 @@ function getCookie(cname) {
 
 
 function profile(){
-    document.getElementById('id').innerText = getCookie("ProfileID");
     var id = document.getElementById('id').innerText;
-    if(id.length != 0){
+    if(getCookie("ProfileID").length != 0){
+        document.getElementById('formCss').style = "visibility = visible;";
+        id = getCookie("ProfileID");}
+    if(typeof(id) == 'number' && id.length  != 0){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(xhttp.responseText);
@@ -226,14 +228,11 @@ function profile(){
                 document.getElementById('PROcontainerHead').innerHTML = "No Data!";
             }
             else{
-                console.log(obj.UserID);
-                console.log(obj.PhotoData);
                 for (var i = 0; i<obj.PhotoData.length ; i++){
                     append(obj.PhotoData[i].SrNo);
                     document.getElementById(obj.PhotoData[i].SrNo).childNodes[1].src = obj.PhotoData[i].link;
                     document.getElementById(obj.PhotoData[i].SrNo).childNodes[3].innerHTML = obj.PhotoData[i].PhotoPrivacy+"<br>Created At: "+ ((obj.PhotoData[i].uploaded_at.split("T")).join("<br>")).substring(0,((obj.PhotoData[i].uploaded_at.split("T")).join("<br>").length-5));
                     document.getElementById('id').innerHTML = obj.PhotoData[i].UserID;
-                    console.log(document.getElementById('View').style);
                     if (obj.PhotoData[i].SetWallpaper === 1){
                         document.getElementById(obj.PhotoData[i].SrNo).childNodes[3].style = "background-color: rgba(255, 0, 0, 0.4) !important;";
                         document.getElementById(obj.PhotoData[i].SrNo).childNodes[5].disabled = "true";
@@ -242,14 +241,15 @@ function profile(){
             }
         }
     };
-}
+
 
     var obj = {
         'profile' : id
     };
+    console.log(obj);
     xhttp.open("get", "?module=" + JSON.stringify(obj), true);
     xhttp.send();
-
+    }
 }
 
 function append(id){
@@ -264,7 +264,7 @@ function deletephoto(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if (obj.del == true){
-                window.location.href = "http://fondo.xyz/profile.html";
+                window.location.href = "https://fondo.xyz/profile.html";
             }
             else{
                 alert("Can't delete this background!!");
@@ -284,7 +284,7 @@ function setback(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if(obj.reply == true){
-            window.location.href = "http://fondo.xyz/profile.html";
+            window.location.href = "https://fondo.xyz/profile.html";
             }
             else{
                 alert("Can't set as background");
