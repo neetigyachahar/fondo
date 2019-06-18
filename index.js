@@ -319,13 +319,15 @@ function toggleprivacy(elem){
 }
 
 function getSignedRequest1(file){
+    console.log("yo");
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
+            console.log("yo");
           var name_image = this.responseText + `.${(file.type).split('/')[1]}`; 
           xhttp.open('GET', `/sign-s3?file-name=${name_image}&file-type=${file.type}`);
           xhttp.onreadystatechange = () => {
           if(xhttp.readyState === 4){
-              if(xhttp.status === 200){
+              if(xhttp.status === 200){console.log("yo");
               const response = JSON.parse(xhttp.responseText);
               uploadFile1(file, response.signedRequest, response.url);
               }
@@ -334,18 +336,22 @@ function getSignedRequest1(file){
           }
       }
       };
+      console.log("yo");
       xhttp.send();
         }
     }
+    console.log("yo");
     xhttp.open("get", "/get_image_name", true);
     xhttp.send();
 }
 
 function uploadFile1(file, signedRequest, url){
+    console.log("yo");
   xhttp.open('PUT', signedRequest);
   xhttp.onreadystatechange = () => {
     if(xhttp.readyState === 4){
       if(xhttp.status === 200){
+        console.log("yo");
           console.log(url);
           document.getElementById("url1").value = url;
       }
@@ -355,9 +361,10 @@ function uploadFile1(file, signedRequest, url){
     }
   };
 
-
+  console.log("yo");
   xhttp.upload.addEventListener("progress", function(evt){
       if (evt.lengthComputable) {
+        console.log("yo");
         console.log("add upload event-listener" + evt.loaded + "/" + evt.total);
         var elem = document.getElementById("myBar"); 
         width = (evt.loaded/evt.total)*100;
@@ -366,6 +373,7 @@ function uploadFile1(file, signedRequest, url){
         document.getElementById("per").innerHTML = Math.round(width)+"%";
       }
     }, false);
+    console.log("yo");
   xhttp.send(file);
 }
 

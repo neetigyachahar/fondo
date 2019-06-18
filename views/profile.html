@@ -57,7 +57,7 @@
                 </div>
                     <script>
                         (() => {
-                            document.getElementById("dedo").onclick = () => {
+                            document.getElementById("dedo").onclick = () => {console.log("yo");
                               document.getElementById('hid').value = document.getElementById('id').innerText;
                               const files = document.getElementById('fileInput').files;
                               const file = files[0];
@@ -70,6 +70,7 @@
                               return;
                           }
                               document.getElementById('type1').value = file.type;
+                              console.log("yo");
                               getSignedRequest1(file);
                             };
                           })();
