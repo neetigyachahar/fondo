@@ -165,7 +165,7 @@ app.use(function(req, res, next){
                     const s3 = new aws.S3();
                     const params = {
                         Bucket: S3_BUCKET,
-                        Key: link[0].link
+                        Key: (link[0].link).split('/')[(link[0].link).split('/').length-1]
                 }
                 try {
                     s3.headObject(params).promise();
