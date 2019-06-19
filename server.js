@@ -160,15 +160,18 @@ app.use(function(req, res, next){
                         res.write(JSON.stringify({"del":false}));
                         res.end();
                     }
+
+
+                    const s3 = new aws.S3();
                     const params = {
-                        Bucket: 'fondo-photobase',
+                        Bucket: S3_BUCKETS,
                         Key: link
                 }
                 try {
-                    await s3.headObject(params).promise()
-                    console.log("File Found in S3")
+                    s3.headObject(params).promise();
+                    console.log("File Found in S3");
                     try {
-                        await s3.deleteObject(params).promise()
+                        s3.deleteObject(params).promise();
                         console.log("file deleted Successfully")
                     }
                     catch (err) {
