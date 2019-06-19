@@ -144,6 +144,9 @@ app.use(function(req, res, next){
             }
         
             case "delete":{
+                var que = `SELECT link FROM photobase WHERE SrNo = ${ki.delete}`;
+                con.query(que, function(err, link){
+                    console.log(link);
                 var que = `DELETE FROM photobase WHERE SrNo = ${ki.delete}`;
                 con.query(que, function(err, result){
                     if (err) throw err;
@@ -157,8 +160,27 @@ app.use(function(req, res, next){
                         res.write(JSON.stringify({"del":false}));
                         res.end();
                     }
+                    const params = {
+                        Bucket: 'fondo-photobase',
+                        Key: link
+                }
+                try {
+                    await s3.headObject(params).promise()
+                    console.log("File Found in S3")
+                    try {
+                        await s3.deleteObject(params).promise()
+                        console.log("file deleted Successfully")
+                    }
+                    catch (err) {
+                         console.log("ERROR in file Deleting : " + JSON.stringify(err))
+                    }
+                } catch (err) {
+                        console.log("File not Found ERROR : " + err.code)
+                }
                 });
+            });
                 break;
+
             }
     
             case "togglePrivacy" : {
