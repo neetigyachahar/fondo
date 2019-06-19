@@ -164,8 +164,8 @@ app.use(function(req, res, next){
 
                     const s3 = new aws.S3();
                     const params = {
-                        Bucket: S3_BUCKETS,
-                        Key: link
+                        Bucket: S3_BUCKET,
+                        Key: link[0].link
                 }
                 try {
                     s3.headObject(params).promise();
