@@ -337,14 +337,25 @@ function getSignedRequest1(file){
       }
       };
       console.log("yo");
-      xhttp.send();
+      xhttp.send();s
         }
     }
     console.log("yo");
     xhttp.open("get", "/get_image_name", true);
     xhttp.send();
 }
+   
+function dothis(){
+    console.log("dn!1");
+    document.getElementsByClassName('fb-page')["data-width"] = `300`;
+    console.log("dn!2");
+}
+setTimeout(dothis, 3000 );
 
+function setWidth(){
+    console.log(`width: ${screen.width}px;`);
+    document.getElementsByClassName('panel').style = `width: ${screen.width}px`;
+}
 function uploadFile1(file, signedRequest, url){
     console.log("yo");
   xhttp.open('PUT', signedRequest);

@@ -282,18 +282,6 @@ app.use(function(req, res, next){
     }
     });
 
-app.get('/', function(req, res){res.render('index.html');});
-
-app.get('/create', function(req, res){
-    fs.readFile("create.html", 'utf8', function(err, result){
-        if(err) throw err;
-        res.writeHead(200);
-        res.write(result);
-        res.end();
-    });
-});
-
-
 app.get('/get_image_name', function(req, res){
     console.log("Mai andar aagaya");
     con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
@@ -399,6 +387,8 @@ app.get('/sign-s3', (req, res) => {
 });
   });
 
+app.get('/', function(req, res){res.render('index.html');});
+app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});
 app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
