@@ -1,5 +1,12 @@
 var xhttp = new XMLHttpRequest();
 
+if(document.fullscreenEnabled == true){
+    if(screen.width < 700){
+        var full = document.getElementsByTagName('body');
+        full.requestFullscreen();
+    }
+}
+
 function togglenav(){
     var mysheet=document.styleSheets[0];
     var myrules=mysheet.cssRules? mysheet.cssRules: mysheet.rules;
