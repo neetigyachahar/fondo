@@ -361,10 +361,7 @@ app.get('/sign-s3', (req, res) => {
         console.log(uploadSql);
         con.query(uploadSql, function(err, result){
             if (err) throw err;
-            res.writeHead(200);
-            console.log("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-            res.write(`<script>window.location.href = 'https://${host}/profile';</script>` );
-            res.end();
+            res.send("profile.html");
         });
     }
     else{
@@ -376,10 +373,7 @@ app.get('/sign-s3', (req, res) => {
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
             if (err)      throw err;
-            res.writeHead(200);
-            res.write(`<script>window.location.href = 'https://${host}/profile'</script>` );
-            res.end();
-            
+            res.send("profile.html");            
         });
     }
     });
@@ -392,6 +386,20 @@ app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});
 app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
+app.get('/extend', function(req, res){
+    var que = `SELECT link FROM photobase WHERE UserID = ${id} AND SetWallpaper = 1`;
+    con.query(que, function(err, result){
+        if(err) throw err;
+       fs.readFile('layout.html', 'utf8', function(err, data){
+        if(err) throw err;
+        var send = {
+            'html' : data,
+            'link' : result[0].link
+        };
+        res.send(JSON.stringify(send));
+       });
+    });
+});
 
 app.get('/:d', function(req, res, next){
     fs.readFile(req.params.d, 'utf8', function(err, result){
