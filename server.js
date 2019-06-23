@@ -387,7 +387,7 @@ app.get('/profile', function(req, res){res.render('profile.html');});
 app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/extend', function(req, res){
-    var que = `SELECT link FROM photobase WHERE UserID = ${id} AND SetWallpaper = 1`;
+    var que = `SELECT link FROM photobase WHERE UserID = ${req.query.id} AND SetWallpaper = 1`;
     con.query(que, function(err, result){
         if(err) throw err;
        fs.readFile('layout.html', 'utf8', function(err, data){
