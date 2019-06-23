@@ -361,7 +361,7 @@ app.get('/sign-s3', (req, res) => {
         console.log(uploadSql);
         con.query(uploadSql, function(err, result){
             if (err) throw err;
-            res.send("profile.html");
+                res.render("profile.html");
         });
     }
     else{
