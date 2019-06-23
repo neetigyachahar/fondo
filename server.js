@@ -389,6 +389,7 @@ app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺");
 app.get('/extend', function(req, res){
     var que = `SELECT link FROM photobase WHERE UserID = ${req.query.id} AND SetWallpaper = 1`;
     con.query(que, function(err, result){
+        console.log(result);
         if(err) throw err;
        fs.readFile('layout.html', 'utf8', function(err, data){
         if(err) throw err;
