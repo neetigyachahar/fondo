@@ -216,7 +216,7 @@ app.use(function(req, res, next){
                 break;
             }
             case "setback" : {
-                if(UserID.length == 0){
+                if(ki.UserID.length == 0){
                     res.write("<script>alert('No profile set');</script>");
                     res.render('profile.html');
                     break;
