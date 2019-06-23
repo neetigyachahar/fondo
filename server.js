@@ -391,6 +391,7 @@ app.get('/extend', function(req, res){
     con.query(que, function(err, result){
         console.log(result);
         if(err) throw err;
+        if(result[0].link.length != 0){
        fs.readFile('layout.html', 'utf8', function(err, data){
         if(err) throw err;
         var send = {
@@ -399,6 +400,10 @@ app.get('/extend', function(req, res){
         };
         res.send(JSON.stringify(send));
        });
+    }
+    else{
+        res.send(404);
+    }
     });
 });
 
