@@ -263,7 +263,7 @@ function deletephoto(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if (obj.del == true){
-                window.location.href = "https://www.fondo.xyz/profile";
+                window.location.href = "http://www.fondo.xyz/profile";
             }
             else{
                 alert("Can't delete this background!!");
@@ -283,7 +283,7 @@ function setback(elem){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
             if(obj.reply == true){
-            window.location.href = "https://www.fondo.xyz/profile";
+            window.location.reload; //= "http://www.fondo.xyz/profile";
             }
             else{
                 alert("Can't set as background");
