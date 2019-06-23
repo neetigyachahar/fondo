@@ -216,6 +216,11 @@ app.use(function(req, res, next){
                 break;
             }
             case "setback" : {
+                if(UserID.length == 0){
+                    res.write("<script>alert('No profile set');</script>");
+                    res.render('profile.html');
+                    break;
+                }
                 var que = `UPDATE photobase SET SetWallpaper = 0 WHERE UserID = ${ki.UserID} AND SetWallpaper = 1`
                 con.query(que, function(err){
                     if (err)   throw err;
