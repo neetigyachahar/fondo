@@ -11,8 +11,8 @@
          cross.addEventListener("click", function(){
              document.getElementById('taskBar').style = "display:none;";
          });
-
-         document.getElementById('background').style = `filter: blur(${document.getElementById('blr').value}px);`;
+         document.getElementById('blr').addEventListener('change', function(){document.getElementById('background').style = `filter: blur(${document.getElementById('blr').value}px);`;});
+         
 
       </script>
 <style>
