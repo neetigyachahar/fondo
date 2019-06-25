@@ -370,10 +370,10 @@ app.get('/sign-s3', (req, res) => {
         });
     }
     else{
-        console.log("+++++++++++++++++++++++++++-----------------------------");
+        console.log("+++++++++++++++++++++++++++----------------------------");
         console.log(fields);
         console.log(uploadSql);
-        console.log("+++++++++++++++++++++++++++-----------------------------");
+        console.log("----------------------------+++++++++++++++++++++++++++");
         var passwd = resultz[0].userPassword;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
@@ -399,11 +399,14 @@ app.get('/extend', function(req, res){
         if(result.length != 0){
        fs.readFile('layout.html', 'utf8', function(err, data){
         if(err) throw err;
+        fs.readFile('popup.html', 'utf8', function(err, result){
         var send = {
             'html' : data,
-            'link' : result[0].link
+            'link' : result[0].link,
+            'popup' : result
         };
         res.send(JSON.stringify(send));
+        });
        });
     }
     else{
