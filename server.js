@@ -400,6 +400,7 @@ app.get('/extend', function(req, res){
        fs.readFile('layout.html', 'utf8', function(err, data){
         if(err) throw err;
         fs.readFile('popup.html', 'utf8', function(err, result){
+            console.log(result[0].link);
         var send = {
             'html' : data,
             'link' : result[0].link,
