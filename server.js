@@ -405,6 +405,7 @@ app.get('/extend', function(req, res){
             'link' : result[0].link,
             'popup' : result
         };
+        console.log(send);
         res.send(JSON.stringify(send));
         });
        });
