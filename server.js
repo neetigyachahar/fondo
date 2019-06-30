@@ -391,7 +391,7 @@ app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});
 app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
-app.get('/popup', function(req, res){res.render('layout.html')});
+app.get('/popup', function(req, res){res.render('popup.html')});
 app.get('/extend', function(req, res){
     var que = `SELECT link FROM photobase WHERE UserID = ${req.query.id} AND SetWallpaper = 1`;
     con.query(que, function(err, result){
