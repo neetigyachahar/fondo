@@ -198,6 +198,11 @@ ul {
   padding: 5px;
 }
 
+.panel img{
+  width: 100%;
+  height: auto;
+}
+
 footer{
   text-align: center;
   display: inline-block;
