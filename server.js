@@ -391,6 +391,7 @@ app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});
 app.get('/confessions', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
 app.get('/about', function(req, res){res.send('<script>alert("Coming Soon ☺"); window.history.back();</script>');});
+app.get('/popup', function(req, res){res.render('layout.html')});
 app.get('/extend', function(req, res){
     var que = `SELECT link FROM photobase WHERE UserID = ${req.query.id} AND SetWallpaper = 1`;
     con.query(que, function(err, result){
@@ -399,16 +400,12 @@ app.get('/extend', function(req, res){
         if(result.length != 0){
        fs.readFile('layout.html', 'utf8', function(err, data){
         if(err) throw err;
-        fs.readFile('popup.html', 'utf8', function(err, resulti){
-            console.log(result[0].link);
         var send = {
             'html' : data,
             'link' : result[0].link,
-            'popup' : resulti
         };
         console.log(send);
         res.send(JSON.stringify(send));
-        });
        });
     }
     else{
