@@ -279,6 +279,10 @@ function deletephoto(elem){
 
 function setback(elem){
     console.log(elem.parentNode.id);
+    if(getCookie("ProfileID").length === 0){
+        alert("Please add an ID to profile first.");
+    }
+    else{
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             var obj = JSON.parse(this.responseText);
@@ -298,6 +302,7 @@ function setback(elem){
 
     xhttp.open("get", "?module="+JSON.stringify(setwall), true);
     xhttp.send();
+}
 }
 
 function toggleprivacy(elem){
