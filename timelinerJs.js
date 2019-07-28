@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $.ajax({
-        url: "http://fondo.xyz/fbjnvc",
+        url: "http://www.fondo.xyz/fbjnvc",
         success: (data)=>{
             alert(data);
         }
