@@ -305,9 +305,6 @@ app.get('/get_image_name', function(req, res){
         });
 });
 
-app.get('/timeliner', (req, res)=>{
-        res.send("/timeliner/home.html");
-});
 
 
 app.get('/sign-s3', (req, res) => {
@@ -390,6 +387,9 @@ app.get('/sign-s3', (req, res) => {
 });
 });
   });
+  app.get('/timeliner', (req, res)=>{
+    res.render("/timeliner/home.html");
+});
 
 app.get('/', function(req, res){res.render('index.html');});
 app.get('/create', function(req, res){res.render('create.html');});
