@@ -1,6 +1,6 @@
 header{
     height: 15vh;
-    background: url('back.jpg') center / cover;
+    background: url('https://fondo-photobase.s3.ap-south-1.amazonaws.com/back.jpg') center / cover;
     text-align: center;
     margin: 0;
     
