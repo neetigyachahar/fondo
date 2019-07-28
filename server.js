@@ -388,7 +388,7 @@ app.get('/sign-s3', (req, res) => {
 });
   });
   app.get('/timeliner', (req, res)=>{
-    res.render("/timeliner/home.html");
+    res.render("timeliner.html");
 });
 
 app.get('/', function(req, res){res.render('index.html');});
