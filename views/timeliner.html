@@ -29,19 +29,19 @@
         </fieldset>
         <fieldset id="model">
           <!-- 14 character max    12/07 | 12:00 PM -> -->
-            <legend class="animateEnd"></legend>
+            <legend class="animateEnd">hey yo</legend>
             <p>
             <span></span>
             </p>
-                <form id="prog" style="display: none;" action="#">
+                <form id="prog" style="display: none;" action="update">
                     <div>
-                      <input type="text" placeholder="Enter Your Progress..." id="progress"><br>
+                      <input type="text" onclick="flood(this);" placeholder="Enter Your Progress..." id="progress"><br>
                       <input id="submitText" type="submit" value="Submit">
                     </div>
                   </form>
           </fieldset>
           
-          <form style="display: none;" id="create">
+          <form action="/createTime" style="display: none;" id="create">
           <fieldset>
               <!-- 14 character max -->
                 <legend class="animateEnd"><input type="text" placeholder="Topic Name" maxlength="14"></legend>
