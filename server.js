@@ -35,7 +35,7 @@ con.connect(function(err){
     var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at timestamp DEFAULT CURRENT_TIMESTAMP	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
     con.query(que, function (err) {
        if (err) throw err; 
-       console.log("Database Connected!");
+        
     });
 });
 
@@ -49,8 +49,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use(function(req, res, next){
-    console.log(req.query);
-    console.log(Object.keys(req.query)[0]);
+     
+     
     if(Object.keys(req.query)[0] == "module"){
         var ki = JSON.parse(req.query.module);
         switch (Object.keys(ki)[0]) {
@@ -61,14 +61,14 @@ app.use(function(req, res, next){
                                 'UserID': null,
                                 'PhotoData': ""
                             };
-                            console.log(ki.search);
-                            console.log(`SELECT * FROM photobase WHERE UserID = ${ki.search}`);
-                            console.log("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
+                             
+                             
+                             
                             con.query(`SELECT * FROM photobase WHERE UserID = ${ki.search} AND PhotoPrivacy = 'Public'`, function(err, result){
                                 if (err) throw err;
-                                console.log("__________________________"+(result)+"sfsf");
+                                 
                                 if((result).length == 0){
-                                    console.log("fdzvfmofvnajfnv+++++++++++++++++++++++++");
+                                     
                                     con.query(`SELECT COUNT(*) FROM photobase WHERE UserID = ${ki.search}`, function(err, result){
                                         if (err)         {             res.writeHead(404);             res.write("some error occurred");             res.end();         }else{
                                         if(result[0]['COUNT(*)'] > 0 ){
@@ -95,22 +95,22 @@ app.use(function(req, res, next){
                     'UserID': null,
                     'PhotoData': null
                 };   
-                console.log("22222222222");
-                console.log(`SELECT * FROM photobase WHERE UserID = ${ki.profile}`);
+                 
+                 
                 con.query(`SELECT * FROM photobase WHERE UserID = ${ki.profile}`, function(err, result){
-                    console.log("3333333333");
+                     
                     if (err)  throw err;
-                        console.log("55555555555555");
-                        console.log(result);
+                         
+                         
                     if(result.length === 0){
-                        console.log("666666666666");
+                         
                         obj.PhotoData = [];
                         res.writeHead(200, {'Content-Type': 'application/json'});
                         res.write(JSON.stringify(obj));
                         res.end();
                     }
                     else{
-                        console.log("77777777777");
+                         
                         obj.UserID = ki.profile;
                         obj.PhotoData = result;
                         res.writeHead(200, {'Content-Type': 'application/json'});
@@ -122,9 +122,9 @@ app.use(function(req, res, next){
             }
     
             case "password":{
-                console.log(ki.password[0]);
+                 
                 var que = `SELECT userPassword FROM photobase WHERE UserID = ${parseInt(ki.password[0])}`;
-                console.log(que);
+                 
                 con.query(que, function(err, results){
                     if (err)   throw err;
                     var obj = {
@@ -146,7 +146,7 @@ app.use(function(req, res, next){
             case "delete":{
                 var que = `SELECT link FROM photobase WHERE SrNo = ${ki.delete}`;
                 con.query(que, function(err, link){
-                    console.log(link);
+                     
                 var que = `DELETE FROM photobase WHERE SrNo = ${ki.delete}`;
                 con.query(que, function(err, result){
                     if (err) throw err;
@@ -169,16 +169,16 @@ app.use(function(req, res, next){
                 }
                 try {
                     s3.headObject(params).promise();
-                    console.log("File Found in S3");
+                     
                     try {
                         s3.deleteObject(params).promise();
-                        console.log("file deleted Successfully")
+                        console.log("file deleted Successfully");
                     }
                     catch (err) {
-                         console.log("ERROR in file Deleting : " + JSON.stringify(err))
+                         console.log("ERROR in file Deleting : " + JSON.stringify(err));
                     }
                 } catch (err) {
-                        console.log("File not Found ERROR : " + err.code)
+                        console.log("File not Found ERROR : " + err.code);
                 }
                 });
             });
@@ -240,9 +240,9 @@ app.use(function(req, res, next){
                             que = `SELECT userPassword FROM photobase WHERE UserID = ${ki.UserID}`
                             con.query( que , function(err, pass){
                                 if (err)  throw err;
-                                console.log(result[0].uploaded_at);
+                                 
                                 var t = result[0].uploaded_at;
-                                console.log(t.toUTCString());
+                                 
                                 que = `INSERT INTO photobase (UserID, link, upvotes, PhotoPrivacy, SetWallpaper, userPassword, tags ) values (${ki.UserID}, "${result[0].link}", ${result[0].upvotes}, "${result[0].PhotoPrivacy}", 1, "${pass[0].userPassword}", "${result[0].tags}")`;
                                 con.query(que, function(err, abcd){
                                     if (err) throw err;
@@ -275,7 +275,7 @@ app.use(function(req, res, next){
             }
     
      
-            default: {console.log("wrong request");
+            default: { 
                         res.writeHead(200);
                         res.write("hello there");
                         res.end();
@@ -288,7 +288,7 @@ app.use(function(req, res, next){
     });
 
 app.get('/get_image_name', function(req, res){
-    console.log("Mai andar aagaya");
+     
     con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
         if(result.length == 0){
             result = [
@@ -305,8 +305,13 @@ app.get('/get_image_name', function(req, res){
         });
 });
 
+app.get('/timeliner', (req, res)=>{
+        res.send("/timeliner/home.html");
+});
+
+
 app.get('/sign-s3', (req, res) => {
-    console.log("reached1");
+     
     const s3 = new aws.S3();
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
@@ -318,22 +323,22 @@ app.get('/sign-s3', (req, res) => {
       ACL: 'public-read'
     };
 
-    console.log("reached2");
+     
   
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if(err){
-    console.log("reached3");
+     
 
-        console.log(err);
+         
         return res.end();
       }
-    console.log("reached4");
+     
 
       const returnData = {
         signedRequest: data,
         url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
       };
-      console.log(returnData.url);
+       
       res.write(JSON.stringify(returnData));
       res.end();
     });
@@ -351,29 +356,29 @@ app.get('/sign-s3', (req, res) => {
             ];
         }
     form.parse(req, function(err, fields, files){
-    console.log("qqqqqqqqqqqqqqqqq");
-    console.log(req.body);
-    console.log(req.query);
+     
+     
+     
     que = `SELECT userPassword FROM photobase WHERE UserID = ${fields.UserID}`;
-    console.log(fields.url);
+     
     con.query(que, function(err, resultz){
         if (err)  throw err;
     if(resultz.length == 0){
-        console.log(resultz);
-        console.log("sssssssssssssssssss");
+         
+         
         var passwd = fields.Password;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
-        console.log(uploadSql);
+         
         con.query(uploadSql, function(err, result){
             if (err) throw err;
                 res.render("profile.html");
         });
     }
     else{
-        console.log("+++++++++++++++++++++++++++----------------------------");
-        console.log(fields);
-        console.log(uploadSql);
-        console.log("----------------------------+++++++++++++++++++++++++++");
+         
+         
+         
+         
         var passwd = resultz[0].userPassword;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
@@ -396,7 +401,7 @@ app.get('/download', function(req, res){res.download('fondo_extension.zip')});
 app.get('/extend', function(req, res){
     var que = `SELECT link FROM photobase WHERE UserID = ${req.query.id} AND SetWallpaper = 1`;
     con.query(que, function(err, result){
-        console.log(result);
+         
         if(err) throw err;
         if(result.length != 0){
        fs.readFile('layout.html', 'utf8', function(err, data){
@@ -405,7 +410,7 @@ app.get('/extend', function(req, res){
             'html' : data,
             'link' : result[0].link,
         };
-        console.log(send);
+         
         res.send(JSON.stringify(send));
        });
     }
