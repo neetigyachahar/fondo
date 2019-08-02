@@ -35,9 +35,24 @@ con.connect(function(err){
     var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at timestamp DEFAULT CURRENT_TIMESTAMP	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
     con.query(que, function (err) {
        if (err) throw err; 
-        
+       console.log("Database connected!");
+        var que = "create table if not exists Tids ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+        con.query(que, function (err) {
+            if (err) throw err; 
+            var que = "create table if not exists topics ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY,topicName text, ID int(11), uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+            con.query(que, function (err) {
+            if (err) throw err; 
+            var que = "create table if not exists progress ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, progresses text, topicName text, uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+            con.query(que, function (err) {
+            if (err) throw err; 
+            console.log("All tables created!!");
+       });
+       });
+       });
     });
 });
+
+
 
 app.use(bodyParser.json()); 
 
@@ -389,6 +404,17 @@ app.get('/sign-s3', (req, res) => {
   });
 
 app.get('/timeliner', (req, res)=>{res.render("timeliner.html");});
+app.get('/timeliner/createTopic', (req, res)=>{
+    // que = `SELECT PhotoPrivacy, uploaded_at FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
+    // con.query(que, function(err, result){
+    //     if (err)  throw err;
+    //     res.writeHead(200);
+    //     res.write(JSON.stringify(result));
+    //     res.end();
+    // });
+    console.log(req.query.topicName);});
+
+
 app.get('/', function(req, res){res.render('index.html');});
 app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});

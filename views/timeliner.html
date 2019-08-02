@@ -19,52 +19,59 @@
         <h1>
           timeliner
         </h1>
-      </header>
-        <fieldset>
-          <legend class="animateEnd">hey</legend>
-          apologize for this inconvenience. Please visit the Domain.com homepage or use the links on this page to find the information you need.
-                        
-          If you think you reached this page in error, you can also ...
-          
-        </fieldset>
+      </header><br>
+
+      <!-- search is here -->
+
+        <div style="text-align: center;">
+          <input type="text" id="search" placeholder="Search for your ID" class="progress"><br>
+          <input class="submitText" onclick="search();" type="submit" value="Search">
+        </div>
+
         <fieldset id="model">
           <!-- 14 character max    12/07 | 12:00 PM -> -->
             <legend class="animateEnd">hey yo</legend>
             <p>
-            <span></span>
+            <span>sfvdz</span>
+            svdzcx
             </p>
                 <form id="prog" style="display: none;" action="update">
                     <div>
-                      <input type="text" onclick="flood(this);" placeholder="Enter Your Progress..." id="progress"><br>
-                      <input id="submitText" type="submit" value="Submit">
+                      <input id="id" type="hidden" value="#">
+                      <input type="text" onclick="flood(this);" placeholder="Enter Your Progress..." class="progress"><br>
+                      <input class="submitText" type="submit" value="Submit">
                     </div>
                   </form>
           </fieldset>
+          <script>
+    function flood(obj){
+      var ba = $(obj).parent().parent().siblings("legend");
+      $(obj).siblings("#id").val(ba.text());
+    }
+          </script>
+
+          <div id="notFound">
+            No ID opened!
+          </div>
           
-          <form action="/createTime" style="display: none;" id="create">
+          <form action="/timeliner/createTopic" style="display: none;" id="create">
           <fieldset>
               <!-- 14 character max -->
-                <legend class="animateEnd"><input type="text" placeholder="Topic Name" maxlength="14"></legend>
+                <legend class="animateEnd"><input type="number" placeholder="Create numerical ID" name="ID" required><input type="text" placeholder="Topic Name" name="topicName" maxlength="14" required></legend>
                 <div>
-                <input id="submitText" type="submit" value="CREATE">
+                <input class="submitText" type="submit" value="CREATE">
                 </div>
               </fieldset>
               </form>
-                        404 Error
-                        The page you requested no longer exists or is temporarily unavailable.
-                        We apologize for this inconvenience. Please visit the Domain.com homepage or use the links on this page to find the information you need.
-                        
-                        If you think you reached this page in error, you can also ...
-                        
-                        Click your browser's Refresh button to try reconnecting to the requested page.
-                        Check the spelling of the URL to make sure the address is correct (capitalization and punctuation are important).
-                        Click your browser's Back button to return to the previous page.
-                        If you have a question or need assistance, please contact our Support Team.
-          <!-- FAB button with ripple -->
+    <!-- FAB button with ripple -->
     <div id="add-button">
       <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
         <i class="material-icons">add</i>
       </button>
     </div>
+    <footer>
+        <hr>
+      REGISTERED ID: <span>12345</span>
+    </footer>
     </body>
 </html>
