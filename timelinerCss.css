@@ -30,9 +30,9 @@ header{
       text-align: center;
   }
  
-/* #model{
+#model{
   display: none;
-} */
+}
 #notFound{
   position: fixed;
   display:none;
@@ -60,6 +60,7 @@ header{
     color: white;
     font-family: 'Pacifico', cursive;
     bottom: 0;
+    font-size: 8vh;
   }
   body{
     background-color:rgb(0, 13, 26);
