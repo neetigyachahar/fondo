@@ -174,6 +174,7 @@ function search(){
 
 function fire(t){
    var topic = $(`#${$(t).parent().parent().attr("id")}`).children("legend").text();
+   if(topic.length != 0){
    var fire =  $(`#${$(t).parent().parent().attr("id")}`).find(".progress").val()
    console.log(topic);
    var para = {
@@ -191,4 +192,8 @@ function fire(t){
             alert(data);
         }
     });
+  }
+  else{
+    alert("Enter topic name!");
+  }
 }
