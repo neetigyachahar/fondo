@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     // $.ajax({
-    //     url: "http://localhost:3000/timeliner/",
+    //     url: "http://www.fondo.xyz/timeliner/",
     //     success: (data)=>{
     //         alert(data);
     //     }
@@ -21,7 +21,7 @@ $(document).ready(function(){
       if($('[name="ID"]').val().length != 0 && $('[name="topicName"]').val().length != 0  ){
         if($('[name="topicName"]').val().length != 0){
           $.ajax({
-            url: `http://localhost:3000/timeliner/createTopic?N=${$('#n').text()}&ID=${$('[name="ID"]').val()}&topicName=${$('[name="topicName"]').val()}`,
+            url: `http://www.fondo.xyz/timeliner/createTopic?N=${$('#n').text()}&ID=${$('[name="ID"]').val()}&topicName=${$('[name="topicName"]').val()}`,
             success: (data)=>{
                 if(data == "ID Successfully Created!"){
                   setCookie("ID", $('[name="ID"]').val());
@@ -124,7 +124,7 @@ function getTopics(){
   if( SavedID.length != 0){
     console.log("hrhrhr");
     $.ajax({
-      url: `http://localhost:3000/timeliner/getID?ID=${SavedID}`,
+      url: `http://www.fondo.xyz/timeliner/getID?ID=${SavedID}`,
       success: (data)=>{
         console.log(JSON.parse(data));
         data = JSON.parse(data);
@@ -164,7 +164,7 @@ function getTopics(){
 
 function search(){
   $.ajax({
-    url: `http://localhost:3000/timeliner/search?ID=${$("#search").val()}`,
+    url: `http://www.fondo.xyz/timeliner/search?ID=${$("#search").val()}`,
     success: (data)=>{
         if(data == "not found"){
           alert(data);
@@ -189,7 +189,7 @@ function fire(t){
    };
 
     $.ajax({
-        url: `http://localhost:3000/timeliner/fire?p=${JSON.stringify(para)}`,
+        url: `http://www.fondo.xyz/timeliner/fire?p=${JSON.stringify(para)}`,
         success: (data)=>{
             if(data == "lit!"){
               getTopics();
