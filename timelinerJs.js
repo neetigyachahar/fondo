@@ -6,69 +6,78 @@ $(document).ready(function(){
     //         alert(data);
     //     }
     // });
-    var SavedID = getCookie('ID');
-    if( SavedID.length != 0){
-      $.ajax({
-        url: `http://localhost:3000/timeliner/getID?ID=${SavedID}`,
-        success: (data)=>{
-          $("footer span").text(SavedID);
-          $("footer").css("display", "block");
+    getTopics();
 
-            alert(data);
-        }
-    });
-    }
-    else{
-      $("#notFound").css("display", "block");
-      $("footer").css("display", "none");
-    }
+  $("#newID").click(()=>{
+    $('[name="ID"]').css("display", "block");
+    $('[name="ID"]').val();
+    $('#n').text(1);
+    $("#newID").css("display", "none");
+  });
+    
 
-    function search(){
-      $.ajax({
-        url: `http://localhost:3000/timeliner/search?ID=${$("#search").val()}`,
-        success: (data)=>{
-            alert(data);
-            if(data == "not found"){
-              alert("ID doesn't exist!");
+    $("#submit").click(()=>{
+      console.log("hey4");
+      if($('[name="ID"]').val().length != 0 && $('[name="topicName"]').val().length != 0  ){
+        if($('[name="topicName"]').val().length != 0){
+          $.ajax({
+            url: `http://localhost:3000/timeliner/createTopic?N=${$('#n').text()}&ID=${$('[name="ID"]').val()}&topicName=${$('[name="topicName"]').val()}`,
+            success: (data)=>{
+                if(data == "ID Successfully Created!"){
+                  setCookie("ID", $('[name="ID"]').val());
+                  getTopics();
+                }
+                else if(data == 'Topic Added!'){
+                  alert(data);
+                  getTopics();
+                }
+                else{
+                  alert(data);
+                }
             }
-            else{
-              setCookie("ID", data, 730);
-              location.reload();
-            }
+        });
         }
+      }
+      else{
+        alert("Please enter a ID and Topic!");
+      }
     });
-    }
 
     $(".mdl-button").click(function(){
       if($("#create").css("display") == "none"){
         $("#create").css("display","block");
-        $("#notFound").css("display", "none");
+        notFound();
       $("html, body").animate({ scrollTop: $(document).height() }, 1000);
       }
       else{
         $("#create").css("display","none");
-        $("#notFound").css("display", "block");
+        $('#n').text(0);
+        $('[name = "ID"]').css("display", "none");
+        notFound();
       }
     });
 
     $(document).click(function() {
+      console.log("hey1");
       $("legend").removeClass("animate");
       $("legend").addClass("animateEnd");
-      $("#prog").css("display", "none");
+      $(".update").css("display", "none");
     });
 
-    $("legend").click(function(event) {
-      $("legend").removeClass("animate");
+    $("section").on("click", "legend", function(event) {
+      console.log("hey2");
+        $("legend").removeClass("animate");
         $("legend").addClass("animateEnd");
-        $("#prog").css("display", "none");
+        $(".update").css("display", "none");
         $(this).removeClass("animateEnd");
         $(this).addClass("animate");
-        console.log($(this).siblings("#prog").css("display", "block"));
+        $(this).siblings(".update").css("display", "block");
         event.stopPropagation();
     });
 
-    $("fieldset").click(function(event) {
+    $("section").on("click", "fieldset", function(event) {
       var thisClass = $(this).children("legend").attr("class");
+      console.log("hey3");
       if(thisClass == "animate"){
         event.stopPropagation();
       }
@@ -95,3 +104,97 @@ function getCookie(cname) {
   }
   return "";
 }  
+
+function notFound(){
+  if(getCookie("ID").length == 0){
+    if($("#notFound").css("display") == "block"){
+      $("#notFound").css("display", "none");
+    }
+    else{
+      $("#notFound").css("display", "block");
+    }
+  }
+  else{
+    $("#notFound").css("display", "none");
+  }
+}
+
+function getTopics(){
+  var SavedID = getCookie('ID');
+  if( SavedID.length != 0){
+    console.log("hrhrhr");
+    $.ajax({
+      url: `http://localhost:3000/timeliner/getID?ID=${SavedID}`,
+      success: (data)=>{
+        console.log(JSON.parse(data));
+        data = JSON.parse(data);
+        $("footer span").text(SavedID);
+        $("footer").css("display", "block");
+        $('[name="ID"]').val(SavedID);
+        $("section").text("");
+        notFound();
+        if($("#create").css("display") != "none"){
+          $(".mdl-button").trigger("click");
+        }
+        for(var topic in data){
+          var topic_i = Object.keys(data).indexOf(topic);
+          console.log(topic_i);
+          $("#model").clone().appendTo("section");
+          $("section fieldset").last().attr("id", topic_i);
+          console.log($(`#${topic_i}`).attr("id"));
+          console.log(topic);
+          $(`#${topic_i} legend`).text(topic);
+          for(var i in data[topic]){
+            console.log((data[topic][i][1]).split("T"));
+            var tim = (((data[topic][i][1]).split("T")).join("<br>")).substring(0,(((data[topic][i][1]).split("T")).join("<br>").length-5));
+            $(`#${topic_i} .flow`).append(`<br><p><span>${tim}</span> | ${data[topic][i][0]}</p>`);
+            $(`#${topic_i} .update`).siblings(".ID").val(getCookie("ID"));
+            $(`#${topic_i} .update`).siblings(".Topic").val(topic);
+          }
+
+        }
+      }
+  });
+  }
+  else{
+    notFound();
+    $("footer").css("display", "none");
+  }
+}
+
+function search(){
+  $.ajax({
+    url: `http://localhost:3000/timeliner/search?ID=${$("#search").val()}`,
+    success: (data)=>{
+        if(data == "not found"){
+          alert(data);
+        }
+        else{
+          setCookie("ID", $("#search").val(), 730);
+          getTopics();
+          console.log("dododo");
+        }
+    }
+});
+}
+
+function fire(t){
+   var topic = $(`#${$(t).parent().parent().attr("id")}`).children("legend").text();
+   var fire =  $(`#${$(t).parent().parent().attr("id")}`).find(".progress").val()
+   console.log(topic);
+   var para = {
+      "ID": getCookie("ID"),
+      "topic": topic,
+      "fire": fire
+   };
+
+    $.ajax({
+        url: `http://localhost:3000/timeliner/fire?p=${JSON.stringify(para)}`,
+        success: (data)=>{
+            if(data == "lit!"){
+              getTopics();
+            }
+            alert(data);
+        }
+    });
+}

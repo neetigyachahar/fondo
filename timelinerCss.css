@@ -8,13 +8,13 @@ header{
   p{
     font-family: 'Fira Code', monospace;
     color: yellow;
-    font-size: 17px;
-    padding-bottom: 15px;
+    font-size: 18px;
+    margin-bottom: 0;
   }
   span{
       color: green !important;
       font-weight: bolder;
-      font-size: 18px !important;
+      font-size: 16px !important;
   }
   .progress{
       background-color: snow !important;
@@ -23,16 +23,27 @@ header{
       outline: none;
       width: 95% !important;
   }
-  #prog div {
+  .update{
+      display: none;
       text-align: center;
   }
-  form div{
+  #create div{
       text-align: center;
+  }
+  #update{
+    margin-top: 16px;
+    border-radius: 22px;
+    width: 50%;
+    padding: 3px;
+    padding-bottom: 10px;
+    font-size: 35px;
+    border-color: red;
   }
  
 #model{
   display: none;
 }
+
 #notFound{
   position: fixed;
   display:none;
@@ -87,7 +98,8 @@ header{
     padding-right: 10px;
     padding-left: 10px;
     font-size: 4vh;
-    text-align: center;  }
+    text-align: center;
+    z-index: 1000;  }
 
   .animate{
     animation: grow 0.09s linear 0s forwards;
@@ -104,14 +116,14 @@ header{
        font-size: 4vh;
    }
    to{
-       font-weight: 800;
+       font-weight: 600;
        font-size: 5vh;
    }
 }
 
   @keyframes endd{
     from{
-      font-weight: 800;
+      font-weight: 600;
       font-size: 5vh;
     }
     to{
@@ -139,7 +151,6 @@ header{
 
  footer{
    display: none;
-   position: absolute;
    width: 100%;
    bottom: 0px;
    color: white;

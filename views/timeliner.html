@@ -20,6 +20,7 @@
           timeliner
         </h1>
       </header><br>
+      <div id="n" style="display: none;">0</div>
 
       <!-- search is here -->
 
@@ -27,48 +28,38 @@
           <input type="number" id="search" placeholder="Search for your ID" class="progress"><br>
           <input class="submitText" onclick="search();" type="submit" value="Search">
         </div>
-
+      <section></section>
         <fieldset id="model">
           <!-- 14 character max    12/07 | 12:00 PM -> -->
             <legend class="animateEnd">hey yo</legend>
-            <p>
-            <span>sfvdz</span>
-            svdzcx
-            </p>
-                <form id="prog" style="display: none;" action="update">
-                    <div>
-                      <input id="id" type="hidden" value="#">
-                      <input type="text" onclick="flood(this);" placeholder="Enter Your Progress..." class="progress"><br>
-                      <input class="submitText" type="submit" value="Submit">
-                    </div>
-                  </form>
+            <div class="flow"></div>
+            <br>
+                <div class="update">
+                      <input type="text" placeholder="Enter Your Progress..." class="progress"><br>
+                      <button id="update" onclick="fire(this);" class="submitText">🔥</button>
+                </div>
           </fieldset>
-          <script>
-    function flood(obj){
-      var ba = $(obj).parent().parent().siblings("legend");
-      $(obj).siblings("#id").val(ba.text());
-    }
-          </script>
 
           <div id="notFound">
             No ID opened!
           </div>
-          
-          <form action="/timeliner/createTopic" style="display: none;" id="create">
+          <!-- action="/timeliner/createTopic" -->
+          <div style="display: none;" id="create">
           <fieldset>
               <!-- 14 character max -->
-                <legend class="animateEnd"><input type="number" placeholder="Create numerical ID" name="ID" required><input type="text" placeholder="Topic Name" name="topicName" maxlength="14" required></legend>
+                <legend class="animateEnd"><input style="display: none; z-index: 100;" type="number" placeholder="Create numerical ID" name="ID" required><br><input type="text" placeholder="Topic Name" name="topicName" maxlength="14" required></legend>
                 <div>
-                <input class="submitText" type="submit" value="CREATE">
+                <button class="submitText" id="submit">CREATE TOPIC</button><br>
+                <button class="submitText" id="newID">Create ID</button> 
                 </div>
               </fieldset>
-              </form>
+            </div>
     <!-- FAB button with ripple -->
     <div id="add-button">
       <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
         <i class="material-icons">add</i>
       </button>
-    </div>
+    </div><br><br>
     <footer>
         <hr>
       REGISTERED ID: <span>12345</span>

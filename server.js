@@ -36,18 +36,10 @@ con.connect(function(err){
     con.query(que, function (err) {
        if (err) throw err; 
        console.log("Database connected!");
-        var que = "create table if not exists Tids ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+        var que = "create table if not exists timeliner ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), topicName text, progress text,  uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
         con.query(que, function (err) {
             if (err) throw err; 
-            var que = "create table if not exists topics ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY,topicName text, ID int(11), uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
-            con.query(que, function (err) {
-            if (err) throw err; 
-            var que = "create table if not exists progress ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, progresses text, topicName text, uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
-            con.query(que, function (err) {
-            if (err) throw err; 
-            console.log("All tables created!!");
-       });
-       });
+            console.log("Table set");
        });
     });
 });
@@ -303,7 +295,6 @@ app.use(function(req, res, next){
     });
 
 app.get('/get_image_name', function(req, res){
-     
     con.query("select SrNo from photobase where SrNo = (select MAX(SrNo) from photobase)", function(err, result){
         if(result.length == 0){
             result = [
@@ -387,10 +378,6 @@ app.get('/sign-s3', (req, res) => {
         });
     }
     else{
-         
-         
-         
-         
         var passwd = resultz[0].userPassword;
         var uploadSql = `insert into photobase (UserID,upvotes, link, PhotoPrivacy, SetWallpaper, userPassword, tags) values ( ${fields.UserID}, 0, "${fields.url}","Public", 0, "${passwd}" , '${fields.tags}');`;
         con.query(uploadSql, function(err, result){
@@ -404,15 +391,129 @@ app.get('/sign-s3', (req, res) => {
   });
 
 app.get('/timeliner', (req, res)=>{res.render("timeliner.html");});
+app.get('/timeliner/search', (req, res)=>{
+    que = `select * from timeliner where ID = ${req.query.ID}`;
+    con.query(que, function(err, result){
+        if (err)  throw err;
+        if(result.length == 0){
+            res.writeHead(200);
+            res.write('not found');
+            res.end();
+        }else{
+            res.writeHead(200);
+            res.write('Exists');
+            res.end();
+        }
+    });
+});
+
+
+app.get('/timeliner/fire', (req, res)=>{
+    var para = JSON.parse(req.query.p);
+    console.log(para);
+    que = `insert into timeliner(ID, topicName, progress) values(${para.ID}, "${para.topic}", "${para.fire}")`;
+    con.query(que, function(err, result){
+        if (err)  throw err;
+        if(result.message.length == 0){
+            res.writeHead(200);
+            res.write('lit!');
+            res.end();
+        }else{
+            res.writeHead(200);
+            res.write('some error occured!');
+            res.end();
+        }
+    });
+});
+
+app.get('/timeliner/getID', (req, res)=>{
+    var obj = {};
+    var arr = new Array();
+    que = `select topicName, progress, uploaded_at from timeliner where ID = ${req.query.ID}`;
+    con.query(que, function(err, result){
+        console.log(result);
+        if(err) throw err;
+        var obj = {};
+        for(var i = 0; i<result.length; i++){
+            var topic = result[i].topicName;
+            var pro = result[i].progress;
+            var tim = result[i].uploaded_at;
+            if (Object.keys(obj).indexOf(topic) > -1) {
+                obj[topic].push([pro, tim]);
+             }
+             else{
+                 obj[topic] = [[pro, tim]];
+             }
+        }
+        console.log(obj)
+        res.write(JSON.stringify(obj));
+        res.end();
+    });
+});
+
 app.get('/timeliner/createTopic', (req, res)=>{
-    // que = `SELECT PhotoPrivacy, uploaded_at FROM photobase WHERE SrNo = ${ki.togglePrivacy}`;
-    // con.query(que, function(err, result){
-    //     if (err)  throw err;
-    //     res.writeHead(200);
-    //     res.write(JSON.stringify(result));
-    //     res.end();
-    // });
-    console.log(req.query.topicName);});
+    que = `select * from timeliner where timeliner.ID = ${req.query.ID} `;
+    con.query(que, function(err, result){
+        if (err) throw err;
+        console.log(result);
+        if(result.length == 0){
+            if(req.query.N == 1){
+                que = `insert into timeliner(ID, topicName, progress) values(${req.query.ID}, "${req.query.topicName}", "Topic created.");`;
+                con.query(que, function(err, result){
+                    if (err)  throw err;
+                    if(result.message.length == 0){
+                        res.writeHead(200);
+                        res.write('ID Successfully Created!');
+                        res.end();
+                    }else{
+                        res.writeHead(200);
+                        res.write('Some Error Occured!');
+                        res.end();
+                    }
+                });
+            }
+            else{
+                res.writeHead(200);
+                res.write('Some Error Occured!');
+                res.end();
+            }
+        }else{
+            if(req.query.N == 0){
+
+                que = `select * from timeliner where ID=${req.query.ID} and topicName =  "${req.query.topicName}";`;
+                con.query(que, function(err, result){
+                    if (err)  throw err;
+                    if(result.length == 0){
+                        que = `insert into timeliner(ID, topicName, progress) values(${req.query.ID}, "${req.query.topicName}", "Topic created.");`;
+                        con.query(que, function(err, result){
+                            if (err)  throw err;
+                            if(result.message.length == 0){
+                                res.writeHead(200);
+                                res.write('Topic Added!');
+                                res.end();
+                            }else{
+                                res.writeHead(200);
+                                res.write('Some Error Occured!');
+                                res.end();
+                            }
+                        });
+                    }else{
+                        res.writeHead(200);
+                        res.write('Topic Already Exists!');
+                        res.end();
+                    }
+                });
+            }
+            else{
+                res.writeHead(200);
+                res.write('ID Already Exists!');
+                res.end();
+            }
+        }
+});
+    console.log(req.query.topicName);
+    console.log(req.query.ID);
+});
 
 
 app.get('/', function(req, res){res.render('index.html');});
@@ -445,6 +546,7 @@ app.get('/extend', function(req, res){
 });
 
 app.get('/:d', function(req, res, next){
+    console.log(req.params.d);
     fs.readFile(req.params.d, 'utf8', function(err, result){
         if(err) next();
         else{
@@ -453,6 +555,17 @@ app.get('/:d', function(req, res, next){
         res.end();}
     });
 });
+
+// app.get('/timeliner/:d', function(req, res, next){
+//     console.log(`timeliner/${req.params.d}`);
+//     fs.readFile(`timeliner/${req.params.d}`, 'utf8', function(err, result){
+//         if(err) next();
+//         else{
+//         res.writeHead(200);
+//         res.write(result);
+//         res.end();}
+//     });
+// });
 
 app.get('*', function(req, res){
     res.send("Invalid request");
