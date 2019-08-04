@@ -1,12 +1,6 @@
 $(document).ready(function(){
-
-    // $.ajax({
-    //     url: "http://www.fondo.xyz/timeliner/",
-    //     success: (data)=>{
-    //         alert(data);
-    //     }
-    // });
     getTopics();
+    document.body.requestFullscreen();
 
   $("#newID").click(()=>{
     $('[name="ID"]').css("display", "block");
