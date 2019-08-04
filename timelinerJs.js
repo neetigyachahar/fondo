@@ -4,7 +4,6 @@ $(document).ready(function(){
 
   $("#newID").click(()=>{
     $('[name="ID"]').css("display", "block");
-    $('[name="ID"]').val(" ");
     $('#n').text(1);
     $("#newID").css("visibility", "hidden");
   });
