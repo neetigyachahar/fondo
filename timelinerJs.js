@@ -6,7 +6,7 @@ $(document).ready(function(){
     $('[name="ID"]').css("display", "block");
     $('[name="ID"]').val(" ");
     $('#n').text(1);
-    $("#newID").css("display", "none");
+    $("#newID").css("visibility", "hidden");
   });
     
 
@@ -40,7 +40,7 @@ $(document).ready(function(){
     $(".mdl-button").click(function(){
       if($("#create").css("display") == "none"){
         $("#create").css("display","block");
-        $("#newID").css("display", "block");
+        $("#newID").css("visibility", "visible");
         notFound();
       $("html, body").animate({ scrollTop: $(document).height() }, 1000);
       }

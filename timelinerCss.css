@@ -102,11 +102,11 @@ header{
     z-index: 1000;  }
 
   .animate{
-    animation: grow 0.09s linear 0s forwards;
+    animation: grow 0.16s linear 0s forwards;
 }
 
   .animateEnd{
-    animation: endd 0.04s linear 0s forwards;
+    animation: endd 0.08s linear 0s forwards;
   }
 
 
