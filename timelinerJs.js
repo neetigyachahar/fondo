@@ -40,7 +40,7 @@ $(document).ready(function(){
     $(".mdl-button").click(function(){
       if($("#create").css("display") == "none"){
         $("#create").css("display","block");
-        $("#newID").css("display", "none");
+        $("#newID").css("display", "block");
         notFound();
       $("html, body").animate({ scrollTop: $(document).height() }, 1000);
       }
