@@ -1,8 +1,0 @@
-find if given ID exists
-    if yes:
-        select all the topics with that ID
-            run loop for all the topics with that ID
-                for a topic[i] get all the progess
-                    set it to an list using loop or whatever
-                    set this list to an object of topic[i]
-                
