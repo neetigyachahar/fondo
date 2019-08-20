@@ -1,11 +1,24 @@
 $(document).ready(function(){
     getTopics();
-    document.body.requestFullscreen();
+    // document.body.requestFullscreen();
 
   $("#newID").click(()=>{
     $('[name="ID"]').css("display", "block");
     $('#n').text(1);
     $("#newID").css("visibility", "hidden");
+  });
+
+  $("#info").click(()=>{
+    var pop = $(".pop");
+    console.log(pop.css('width'));
+    if(pop.css("height") == "0px"){
+      $(".pop").removeClass("anipopEnd");
+      $(".pop").addClass("anipopStart");
+    }
+    else{
+      $(".pop").removeClass("anipopStart");
+      $(".pop").addClass("anipopEnd");
+    }
   });
     
 
