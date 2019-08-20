@@ -367,7 +367,9 @@ color: white;
 }
 
 
-
+::-webkit-scrollbar {
+  width: 0px;
+}
 
 
 /* //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111
@@ -437,6 +439,3 @@ color: white;
   }
 }
 
-::-webkit-scrollbar {
-  width: 0px;
-}
