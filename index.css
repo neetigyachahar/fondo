@@ -3,10 +3,6 @@
   padding: 0;
 }
 
-body{
-
-}
-
 
 #welcome{
 background-color:  rgba(255, 255, 255, 0.5);
@@ -146,7 +142,7 @@ border: 3px solid;
 border-image: linear-gradient(to right bottom, #c40008, #010023 ) 1 100;
 padding: 5px;
 font-size: 18px;
-color: white;
+color: yellow !important;
 min-width: 280px;
 max-width: 650px;
 margin: 5px;
@@ -154,7 +150,7 @@ outline: none;
 }
 
 .passInput::placeholder{
-color: rgb(248, 247, 247);
+color: rgb(128, 128, 128);
 }
 
 #passCs::placeholder{
@@ -439,4 +435,8 @@ color: white;
   .panel{
     padding: 0;
   }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
