@@ -30,6 +30,7 @@ var con = mysql.createConnection({
 // });
 
 app.use(function(req,res, next){
+    console.log(con.state);
     if(con.state != "authenticated"){
         con.connect(function(err){
             if(err) throw err;
