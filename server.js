@@ -11,7 +11,6 @@ app.set('views', './views');
 app.use(express.static('./public'));
 app.engine('html', require('ejs').renderFile);
 
-app.use(()=>{console.log("req received!")});
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
@@ -30,22 +29,25 @@ var con = mysql.createConnection({
 //     database: "FondoBase",
 // });
 
-con.connect(function(err){
-    if(err) throw err;
-    var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at timestamp DEFAULT CURRENT_TIMESTAMP	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
-    con.query(que, function (err) {
-       if (err) throw err; 
-       console.log("Database connected!");
-        var que = "create table if not exists timeliner ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), topicName text, progress text,  uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
-        con.query(que, function (err) {
-            if (err) throw err; 
-            console.log("Table set");
-            console.log(con.state);
-       });
-    });
+app.use(function(req,res, next){
+    if(con.state != "authenticated"){
+        con.connect(function(err){
+            if(err) throw err;
+            var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at timestamp DEFAULT CURRENT_TIMESTAMP	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
+            con.query(que, function (err) {
+               if (err) throw err; 
+               console.log("Database connected!");
+                var que = "create table if not exists timeliner ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), topicName text, progress text,  uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+                con.query(que, function (err) {
+                    if (err) throw err; 
+                    console.log("Table set");
+                    console.log(con.state);
+                    next();
+               });
+            });
+        });        
+    }
 });
-
-
 
 
 app.use(bodyParser.json()); 
