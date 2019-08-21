@@ -42,11 +42,11 @@ app.use(function(req,res, next){
                     if (err) throw err; 
                     console.log("Table set");
                     console.log(con.state);
-                    next();
                });
             });
-        });        
+        });
     }
+    next();
 });
 
 
