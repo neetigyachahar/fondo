@@ -11,7 +11,7 @@ app.set('views', './views');
 app.use(express.static('./public'));
 app.engine('html', require('ejs').renderFile);
 
-
+app.use(console.log("req received!"));
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
@@ -40,9 +40,11 @@ con.connect(function(err){
         con.query(que, function (err) {
             if (err) throw err; 
             console.log("Table set");
+            console.log(con.state);
        });
     });
 });
+
 
 
 
@@ -576,4 +578,9 @@ app.use(function(err, req, res) {
     res.status(500).send('Something broke!');
  });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, function (){
+  console.log("Calling app.listen's callback function.");
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('Example app listening at http://%s:%s', host, port);
+});
