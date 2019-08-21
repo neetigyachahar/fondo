@@ -11,7 +11,7 @@ app.set('views', './views');
 app.use(express.static('./public'));
 app.engine('html', require('ejs').renderFile);
 
-app.use(console.log("req received!"));
+app.use(()=>{console.log("req received!")});
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
