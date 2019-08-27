@@ -1,52 +1,4 @@
- <div id="background" style="filter: blur(0px);">
-                    <img id = "image" src="#" style="width: 100%; min-height: 100%;" alt="background">
-            </div>
-
-<style>
-    #background{
-  top: 0;
-  bottom: 0;
-  position: fixed;
-  padding: 0;
-  margin: 0;
-  color: black;
-  height: 100%;
-  width: 100%;
-  z-index:-100;
-}
-
-#background img{
-  object-fit: cover;
-}
-</style>
-
-
-<!-- <html>
-    <head>
-        <title>
-            Chat
-        </title> -->
-        <script src='http://code.jquery.com/jquery-latest.min.js'></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet">
-        <!-- <link rel="stylesheet" type="text/css" href="chat.css"> -->
-    <!-- </head>
-    <body> -->
-        <!-- <input type="hidden" name="authorizedIDX" value="18BCE0795"> -->
-        <h3 class="outter" id="chatpop">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
-        <section>
-        <h3 id="head">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
-        <div id="chatFeed">
-            <ol class="messages">
-            </ol>
-          </div>
-        <div id="interact">
-        <input id="chatInput" type="text">
-        <button id="chatbtn">Send</button>
-        </div>
-    </section>
-    <style>
-         #chatFeed{
+ #chatFeed{
             margin-top: 0;
             overflow: scroll !important;
             display: flex;
@@ -179,7 +131,7 @@
 #chatFeed ol li div{
     font-size: 16px;
     margin: 0;
-    padding: 2px;
+    padding: 3px;
     padding-right: 10px;
     padding-left: 10px;
     margin-bottom: 0px;
@@ -189,17 +141,11 @@
     bottom: 0;
 }
 
-.mine{
-    background-color: transparent !important;
-}
-
 .mine div{
     border-top-right-radius:5px !important;
     border-top-left-radius: 18px !important;   
-    color: white !important;
-    background-color: rgb(85, 0, 255) !important;
+    background-color: rgb(184, 201, 167);
 }
-
 
 #chatFeed ol li p{
     margin:0;   
@@ -207,13 +153,6 @@
     padding-left: 10px;
     max-width: 400px;
     word-wrap:break-word;
-}
-
-.mine p{
-    color: white;
-    background-color: rgba(1,0, 100, 0.5 );
-    border-bottom-right-radius: 18px;
-    border-bottom-left-radius: 18px;
 }
 
 #chatpop{
@@ -238,84 +177,3 @@
     background-color: rgb(0, 0, 60);
     cursor: pointer;
 }
-    </style>
-    <script defer >
-            var id = '';
-            var flag = 1000;
-            
-            setInterval(checkLogin, 1000);
-            
-            function checkLogin(){
-                if($('[name="authorizedIDX"]').length != flag){
-                    flag = $('[name="authorizedIDX"]').length;
-                    if(flag > 0){
-                        id = $('[name="authorizedIDX"]').val();
-                        $('#chatpop').attr('class', 'inner');
-                    }
-                    else{
-                        id = "";
-                    }
-                }
-                if(flag == 0){
-                    $('#chatpop').attr('class', 'outter');
-                }
-                return;    
-            }
-            
-            var io = io.connect('http://localhost:4000');
-                    io.on('online', online=>{
-                        $('h3 div').html(`&#x25CF;&nbsp;${online}`);
-                    });
-            
-                    io.on('message', function(msg){
-                        msg = JSON.parse(msg);
-                        if(msg.id == id){
-                            $('.messages').append(`<li class="mine"><div><b>${msg.id}</b></div><p>${msg.text}</p></li>`);
-                        }else{
-                            $('.messages').append(`<li><div><b>${msg.id}</b></div><p>${msg.text}</p></li>`);               
-                        }
-                        $('.messages').scrollTop($('.messages')[0].scrollHeight);
-                        $('#chatInput').focus();
-                    });
-                    
-            
-                    $('#chatbtn').click(fire);
-                    $('#chatInput').keypress(function (e) {
-                    if (e.which == 13) {
-                        fire();
-                        return false;    //<---- Add this line
-                    }
-                    });
-            
-                    function fire(){
-                        var chat = $('#chatInput').val();
-                        var chat = {
-                            id: id,
-                            text: $('#chatInput').val().trim().replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                        };
-                        if(chat.text.length == 0){
-                            $('#chatInput').val('');
-                            $('#chatInput').focus();
-                            return 0;
-                        }
-                        $('#chatInput').val('');
-                        chat = JSON.stringify(chat);
-                        io.emit('message', chat);
-                    }
-            
-                    $('#chatpop').click(()=>{
-                        if($('#chatpop').attr("class") == "outter"){
-                            alert("Please login to join chat!!");
-                            return false;
-                        }
-                        $('#chatpop').css('display', 'none');
-                        $('section').css('display', 'block');
-                    });
-            
-                    $('#head').click(()=>{
-                        $('#chatpop').css('display', 'block');
-                        $('section').css('display', 'none');
-                    });
-                    </script>
-    <!-- </body>
-</html> -->
