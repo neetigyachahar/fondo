@@ -3,7 +3,6 @@
         <title>
             Chat
         </title>
-        <script src='http://code.jquery.com/jquery-latest.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet">
         <!-- <link rel="stylesheet" type="text/css" href="chat.css"> -->
@@ -11,7 +10,7 @@
     <body>
         <!-- <input type="hidden" name="authorizedIDX" value="18BCE0795"> -->
         <h3 class="outter" id="chatpop">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
-        <section>
+        <section id="sec">
         <h3 id="head">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
         <div id="chatFeed">
             <ol class="messages">
@@ -95,7 +94,7 @@
             color: blue;
         }
 
-        section{
+        #sec{
             position: fixed;
             right: 40px;
             bottom: 0;
@@ -239,7 +238,7 @@
                 return;    
             }
             
-            var io = io.connect('http://localhost:4000');
+            var io = io.connect('http://fondo.xyz:4000');
                     io.on('online', online=>{
                         $('h3 div').html(`&#x25CF;&nbsp;${online}`);
                     });
@@ -286,12 +285,12 @@
                             return false;
                         }
                         $('#chatpop').css('display', 'none');
-                        $('section').css('display', 'block');
+                        $('#sec').css('display', 'block');
                     });
             
                     $('#head').click(()=>{
                         $('#chatpop').css('display', 'block');
-                        $('section').css('display', 'none');
+                        $('#sec').css('display', 'none');
                     });
                     </script>
     </body>
