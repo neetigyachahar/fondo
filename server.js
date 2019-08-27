@@ -1,10 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var server = require('http').Server(express());
 const mysql = require('mysql');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const formidable = require('formidable');
-const io = require('socket.io')(4000);
+const io = require('socket.io')(server);
 
 io.on('connection', function(socket){
     io.emit('online', Object.keys(io.sockets.connected).length);
