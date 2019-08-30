@@ -1,3 +1,4 @@
+<div id="chatBox">
 <html>
     <head>
         <title>
@@ -12,9 +13,7 @@
 
     </head>
     <body>
-        <div id="chatBox">
-        <div style="color: white; text-align: center;">
-        Set a name to begin: <input id="nameTaker" type="text" name="authorizedIDX" value></div>
+        <input type="hidden" name="authorizedIDX" value="18BCE0795">
         <h3 class="outter" id="chatpop">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
         <section id="sec">
         <h3 id="head">Discussions<div>&#x25CF;&nbsp;loading...</div></h3>
@@ -59,11 +58,6 @@
             border-top-right-radius: 14px;
             z-index:10000000 !important;
         }
-
-        body{
-            background-color: rgb(158, 158, 158);
-        }
-
         #chatBox h3 div{
             position: absolute;
             right: 25px;
@@ -222,7 +216,7 @@
 }
 
 .inner{
-    background-color: rgb(0, 0, 50);
+    background-color: rgb(0, 0, 60);
     cursor: pointer;
 }
 @media only screen and (max-width: 500px) {
@@ -273,10 +267,10 @@
             else{
                 $('#chatpop').attr('class', 'outter');
             }
-            return;    
+              return;    
           }
           
-          var io = io.connect('https://fathomless-refuge-64458.herokuapp.com');
+          var io = io.connect('localhost:3000');
                   io.on('online', online=>{
                       $('#chatBox h3 div').html(`&#x25CF;&nbsp;${online}`);
                   });
@@ -299,15 +293,6 @@
                       fire();
                       return false;    //<---- Add this line
                   }
-                  });
-
-                  $('#nameTaker').keypress(function(e){
-                      if(e.which == 13){
-                          if($('#nameTaker').val().length != 0){
-                        $('#chatpop').css('display', 'none');
-                        $('#sec').css('display', 'block');   
-                          }
-                      }
                   });
           
                   function fire(){
@@ -341,6 +326,7 @@
                   });
                 
                   </script>
-</div>
+
     </body>
 </html>
+</div>
