@@ -20,7 +20,7 @@ function checkLogin(){
     return;    
 }
 
-var io = io.connect('http://localhost:4000');
+var io = io.connect('http://fondo.xyz');
         io.on('online', online=>{
             $('h3 div').html(`&#x25CF;&nbsp;${online}`);
         });

@@ -20,14 +20,14 @@
 }
 </style>
 
-
 <div id="chatBox">
+  <button id="chal" style="display: none;" onclick="startDhanda();">press here</button>
     <!-- <html>
         <head>
             <title>
                 Chat
             </title> -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+            <script>$.getScript("https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js")</script>
             <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet">
             <!-- <link rel="stylesheet" type="text/css" href="chat.css"> -->
         <!-- </head> -->
@@ -240,8 +240,10 @@
     }
         </style>
         <script defer >
+          function startDhanda(){
                 var id = '';
                 var flag = 1000;
+                console.log("script workinsdsdg");
                 
                 setInterval(checkLogin, 1000);
                 
@@ -262,7 +264,7 @@
                     return;    
                 }
                 
-                var io = io.connect('http://fondo.xyz');
+                var io = io.connect('https://fathomless-refuge-64458.herokuapp.com');
                         io.on('online', online=>{
                             $('#chatBox h3 div').html(`&#x25CF;&nbsp;${online}`);
                         });
@@ -316,6 +318,7 @@
                             $('#chatpop').css('display', 'block');
                             $('#sec').css('display', 'none');
                         });
+                      }
                         </script>
         <!-- </body>
     </html> -->
