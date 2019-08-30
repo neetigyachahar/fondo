@@ -1,10 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var server = require('http').Server(express());
 const mysql = require('mysql');
 const fs = require('fs');
 const aws = require('aws-sdk');
 const formidable = require('formidable');
+var app = express();
+var server = app.listen(process.env.PORT || 3000);
 const io = require('socket.io')(server);
 
 io.on('connection', function(socket){
@@ -24,7 +25,7 @@ io.on('disconnect', function(){
     console.log('dis-----------sdf-sad-fa-sdf-asd-f');
     io.emit('online', Object.keys(io.sockets.connected).length);
 });
-var app = express();
+
 
 app.set('views', './views');
 app.use(express.static('./public'));
@@ -612,5 +613,3 @@ app.get('*', function(req, res){
 //     console.error(err.stack);
 //     res.status(500).send('Something broke!');
 //  });
-
-app.listen(process.env.PORT || 3000);
