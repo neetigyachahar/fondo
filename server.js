@@ -25,7 +25,7 @@ io.on('connection', function(socket){
 
 gc.on('connection', function(socket1){
     console.log("GC Connected: "+ io.of('/globalChat').clients().length);
-    socket1.emit('onlineGC', Object.keys(gc.sockets.connected).length);
+    socket1.emit('onlineGC',  io.of('/globalChat').clients().length);
     socket1.on('gc', function(msg){
         if(JSON.parse(msg).id.length == 0 ){
             return false;
@@ -33,7 +33,7 @@ gc.on('connection', function(socket1){
         socket1.emit('gc', msg);
     });
     socket1.on('disconnect', function(){
-        gc.emit('gc', gc.clients().length);
+        gc.emit('gc',  io.of('/globalChat').clients().length);
     });
 });
 
