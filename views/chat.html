@@ -356,6 +356,7 @@
                       $('#chatInput').val('');
                       chat = JSON.stringify(chat);
                       io.emit('gc', chat);
+                      console.log('haha');
                   }
           
                   $('#chatpop').click(()=>{

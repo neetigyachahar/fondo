@@ -24,16 +24,17 @@ io.on('connection', function(socket){
 
 
 gc.on('connection', function(socket1){
-    console.log("GC Connected: "+gc.clients().length);
-    socket1.emit('onlineGC', gc.clients().length);
+    console.log("GC Connected: "+ Object.keys(gc.sockets.connected).length);
+    socket1.emit('onlineGC', Object.keys(gc.sockets.connected).length);
     socket1.on('gc', function(msg){
+        console.log("Inside gc");
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
         socket1.emit('gc', msg);
     });
     socket1.on('disconnect', function(){
-        gc.emit('gc', gc.clients().length);
+        gc.emit('gc', Object.keys(gc.sockets.connected).length);
     });
 });
 
