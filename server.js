@@ -7,24 +7,40 @@ const formidable = require('formidable');
 var app = express();
 var server = app.listen(process.env.PORT || 3000);
 const io = require('socket.io')(server);
+const gc = io.of('/globalChat');
 
 io.on('connection', function(socket){
     io.emit('online', Object.keys(io.sockets.connected).length);
-    socket.on('message', function(msg){
+    socket.on('vtop', function(msg){
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
-        io.emit('message', msg);
+        io.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
         io.emit('online', Object.keys(io.sockets.connected).length);
     });
 });
 
-io.on('disconnect', function(){
-    console.log('dis-----------sdf-sad-fa-sdf-asd-f');
-    io.emit('online', Object.keys(io.sockets.connected).length);
+
+gc.on('connection', function(socket1){
+    console.log("GC Connected: "+gc.clients().length);
+    io.emit('onlineGC', gc.clients().length);
+    socket1.on('gc', function(msg){
+        if(JSON.parse(msg).id.length == 0 ){
+            return false;
+        }
+        io.emit('gc', msg);
+    });
+    socket.on('disconnect', function(){
+        io.emit('gc', gc.clients().length);
+    });
 });
+
+// io.on('disconnect', function(){
+//     console.log('dis-----------sdf-sad-fa-sdf-asd-f');
+//     io.emit('online', Object.keys(io.sockets.connected).length);
+// });
 
 
 app.set('views', './views');

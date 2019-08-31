@@ -309,11 +309,11 @@
           }
           
           var io = io.connect('https://fathomless-refuge-64458.herokuapp.com');
-                  io.on('online', online=>{
+                  io.on('onlineGC', online=>{
                       $('#chatBox h3 div').html(`&#x25CF;&nbsp;${online}`);
                   });
           
-                  io.on('message', function(msg){
+                  io.on('gc', function(msg){
                       msg = JSON.parse(msg);
                       if(msg.id == id){
                           $('.messages').append(`<li class="mine"><div><b>${msg.id}</b></div><p>${msg.text}</p></li>`);
@@ -355,7 +355,7 @@
                       }
                       $('#chatInput').val('');
                       chat = JSON.stringify(chat);
-                      io.emit('message', chat);
+                      io.emit('gc', chat);
                   }
           
                   $('#chatpop').click(()=>{
