@@ -7,8 +7,8 @@ const formidable = require('formidable');
 var app = express();
 var server = app.listen(process.env.PORT || 3000);
 var io = require('socket.io')(server);
-io = io.of('/');
 const gc = io.of('/globalChat');
+io = io.of('/');
 
 io.on('connection', function(socket){
     var num1 = io.of('/').sockets;
