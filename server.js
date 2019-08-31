@@ -25,14 +25,14 @@ io.on('connection', function(socket){
 
 gc.on('connection', function(socket1){
     console.log("GC Connected: "+gc.clients().length);
-    gc.emit('onlineGC', gc.clients().length);
+    socket1.emit('onlineGC', gc.clients().length);
     socket1.on('gc', function(msg){
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
-        gc.emit('gc', msg);
+        socket1.emit('gc', msg);
     });
-    socket.on('disconnect', function(){
+    socket1.on('disconnect', function(){
         gc.emit('gc', gc.clients().length);
     });
 });
