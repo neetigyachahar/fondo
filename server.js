@@ -34,17 +34,20 @@ gc.on('connection', function(socket1){
     num = Object.keys(num).length;
     console.log("GC Connected: "+ num);
     socket1.emit('onlineGC',  num);
+    socket1.broadcast.emit('onlineGC',  num);
     socket1.on('gc', function(msg1){
         if(JSON.parse(msg1).id.length == 0 ){
             return false;
         }
         console.log("gc pe aaya");
         socket1.emit('gc', msg1);
+        socket1.broadcast.emit('gc', msg1);
     });
     socket1.on('disconnect', function(){
         num = io.of('/globalChat').sockets;
         num = Object.keys(num).length;
         socket1.emit('gc',  num);
+        socket1.broadcast.emit('gc',  num);
     });
 });
 
