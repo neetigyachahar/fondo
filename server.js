@@ -6,11 +6,14 @@ const aws = require('aws-sdk');
 const formidable = require('formidable');
 var app = express();
 var server = app.listen(process.env.PORT || 3000);
-const io = require('socket.io')(server);
+var io = require('socket.io')(server);
+io = io.of('/');
 const gc = io.of('/globalChat');
 
 io.on('connection', function(socket){
-    io.emit('online', Object.keys(io.sockets.connected).length);
+    var num1 = io.of('/').sockets;
+    num1 = Object.keys(num1).length;
+    io.emit('online', num1);
     socket.on('vtop', function(msg){
         console.log("vtop pe aaya");
         if(JSON.parse(msg).id.length == 0 ){
@@ -19,7 +22,7 @@ io.on('connection', function(socket){
         io.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
-        io.emit('online', Object.keys(io.sockets.connected).length);
+        io.emit('online', num1);
     });
 });
 
