@@ -8,10 +8,10 @@ var app = express();
 var server = app.listen(process.env.PORT || 3000);
 var io = require('socket.io')(server);
 const gc = io.of('/globalChat');
-const iov = io.of('/');
+const iov = io.of('/vtop');
 
 iov.on('connection', function(socket){
-    var num1 = io.of('/').sockets;
+    var num1 = io.of('/vtop').sockets;
     num1 = Object.keys(num1).length;
     socket.emit('online', num1);
     socket.broadcast.emit('online', num1);
@@ -24,7 +24,7 @@ iov.on('connection', function(socket){
         socket.broadcast.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
-        num1 = io.of('/').sockets;
+        num1 = io.of('/vtop').sockets;
         num1 = Object.keys(num1).length;
         socket.broadcast.emit('online', num1);
     });
