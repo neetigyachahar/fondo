@@ -314,6 +314,7 @@
                   });
           
                   io.on('gc', function(msg){
+                      console.log("dsffsafsafs");
                       msg = JSON.parse(msg);
                       if(msg.id == id){
                           $('.messages').append(`<li class="mine"><div><b>${msg.id}</b></div><p>${msg.text}</p></li>`);

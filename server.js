@@ -22,6 +22,8 @@ iov.on('connection', function(socket){
         socket.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
+        num1 = io.of('/').sockets;
+        num1 = Object.keys(num1).length;
         socket.emit('online', num1);
     });
 });
@@ -32,14 +34,16 @@ gc.on('connection', function(socket1){
     num = Object.keys(num).length;
     console.log("GC Connected: "+ num);
     socket1.emit('onlineGC',  num);
-    socket1.on('gc', function(msg){
-        console.log("gc pe aaya");
-        if(JSON.parse(msg).id.length == 0 ){
+    socket1.on('gc', function(msg1){
+        if(JSON.parse(msg1).id.length == 0 ){
             return false;
         }
-        socket1.emit('gc', msg);
+        console.log("gc pe aaya");
+        socket1.emit('gc', msg1);
     });
     socket1.on('disconnect', function(){
+        num = io.of('/globalChat').sockets;
+        num = Object.keys(num).length;
         socket1.emit('gc',  num);
     });
 });
