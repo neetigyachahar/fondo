@@ -14,17 +14,19 @@ iov.on('connection', function(socket){
     var num1 = io.of('/').sockets;
     num1 = Object.keys(num1).length;
     socket.emit('online', num1);
+    socket.broadcast.emit('online', num1);
     socket.on('vtop', function(msg){
         console.log("vtop pe aaya");
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
         socket.emit('vtop', msg);
+        socket.broadcast.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
         num1 = io.of('/').sockets;
         num1 = Object.keys(num1).length;
-        socket.emit('online', num1);
+        socket.broadcast.emit('online', num1);
     });
 });
 
@@ -46,8 +48,7 @@ gc.on('connection', function(socket1){
     socket1.on('disconnect', function(){
         num = io.of('/globalChat').sockets;
         num = Object.keys(num).length;
-        socket1.emit('gc',  num);
-        socket1.broadcast.emit('gc',  num);
+        socket1.broadcast.emit('onlineGC',  num);
     });
 });
 
