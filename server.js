@@ -23,7 +23,7 @@ iov.on('connection', function(socket){
         socket.emit('vtop', msg);
         socket.broadcast.emit('vtop', msg);
     });
-    socket.on('disconnect', function(){
+socket.on('disconnect', function(){
         num1 = io.of('/vtop').sockets;
         num1 = Object.keys(num1).length;
         socket.broadcast.emit('online', num1);
@@ -80,6 +80,29 @@ var con = mysql.createConnection({
 //     database: "FondoBase",
 // });
 
+console.log("Connection state: "+con.state);
+var note = 1;
+
+app.use(function(req,res, next){
+    console.log("Connection state Andar use: "+ con.state);
+    if(note == 1 && con.state == "disconnected"){
+    conSql();
+    note = 0;
+    setInterval(()=>{note = 1}, 600000);
+    }
+    next();
+});
+
+// function conSql(){
+//     console.log("Connection state Andar andar use: "+ con.state);
+//     console.log(con.state);
+// }
+
+
+
+
+
+function conSql(){
 con.connect(function(err){
     if(err) throw err;
     var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' ))	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
@@ -94,24 +117,7 @@ con.connect(function(err){
        });
     });
 });
-
-// app.use(function(req,res, next){
-//     console.log(con.state);
-//     if(con.state != "authenticated"){
-
-//     }
-//     var tim = 0;
-//     while(con.state != "authenticated"){
-//         tim += 1;
-//         if(1000000>tim){
-//             console.log("not able to connect to database!");
-//             res.end();
-//         }
-//     }
-//     console.log(tim);
-//     next();
-// });
-
+}
 
 
 app.use(bodyParser.json()); 
