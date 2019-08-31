@@ -8,21 +8,21 @@ var app = express();
 var server = app.listen(process.env.PORT || 3000);
 var io = require('socket.io')(server);
 const gc = io.of('/globalChat');
-io = io.of('/');
+const iov = io.of('/');
 
-io.on('connection', function(socket){
+iov.on('connection', function(socket){
     var num1 = io.of('/').sockets;
     num1 = Object.keys(num1).length;
-    io.emit('online', num1);
+    socket.emit('online', num1);
     socket.on('vtop', function(msg){
         console.log("vtop pe aaya");
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
-        io.emit('vtop', msg);
+        socket.emit('vtop', msg);
     });
     socket.on('disconnect', function(){
-        io.emit('online', num1);
+        socket.emit('online', num1);
     });
 });
 
@@ -40,7 +40,7 @@ gc.on('connection', function(socket1){
         socket1.emit('gc', msg);
     });
     socket1.on('disconnect', function(){
-        gc.emit('gc',  num);
+        socket1.emit('gc',  num);
     });
 });
 
