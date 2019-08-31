@@ -12,6 +12,7 @@ const gc = io.of('/globalChat');
 io.on('connection', function(socket){
     io.emit('online', Object.keys(io.sockets.connected).length);
     socket.on('vtop', function(msg){
+        console.log("vtop pe aaya");
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
@@ -24,16 +25,19 @@ io.on('connection', function(socket){
 
 
 gc.on('connection', function(socket1){
-    console.log("GC Connected: "+ io.of('/globalChat').clients().length);
-    socket1.emit('onlineGC',  io.of('/globalChat').clients().length);
+    var num = io.of('/globalChat').sockets;
+    num = Object.keys(num).length;
+    console.log("GC Connected: "+ num);
+    socket1.emit('onlineGC',  num);
     socket1.on('gc', function(msg){
+        console.log("gc pe aaya");
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
         socket1.emit('gc', msg);
     });
     socket1.on('disconnect', function(){
-        gc.emit('gc',  io.of('/globalChat').clients().length);
+        gc.emit('gc',  num);
     });
 });
 
