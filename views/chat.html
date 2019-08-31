@@ -308,7 +308,7 @@
             return;    
           }
           
-          var io = io.connect('https://fathomless-refuge-64458.herokuapp.com');
+          var io = io.connect('https://fathomless-refuge-64458.herokuapp.com/globalChat');
                   io.on('onlineGC', online=>{
                       $('#chatBox h3 div').html(`&#x25CF;&nbsp;${online}`);
                   });
