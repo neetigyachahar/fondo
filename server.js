@@ -20,7 +20,7 @@ iov.on('connection', function(socket){
         if(JSON.parse(msg).id.length == 0 ){
             return false;
         }
-        socket.emit('vtop', msg);
+        // socket.emit('vtop', msg);
         socket.broadcast.emit('vtop', msg);
     });
 socket.on('disconnect', function(){
