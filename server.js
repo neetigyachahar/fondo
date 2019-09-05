@@ -73,12 +73,12 @@ var con = mysql.createConnection({
     "port" : "3306"
 });
 
-// var con = mysql.createConnection({
-//     host : "localhost",
-//     user : "root",
-//     password: "bharat1@",
-//     database: "FondoBase",
-// });
+var conakash = mysql.createConnection({
+    host : "remotemysql.com",
+    user : "UzxBWmAJRh",
+    password: "l7kouMwha3",
+    database: "UzxBWmAJRh"
+});
 
 console.log("Connection state: "+con.state);
 var note = 1;
@@ -92,6 +92,8 @@ app.use(function(req,res, next){
     }
     next();
 });
+
+
 
 // function conSql(){
 //     console.log("Connection state Andar andar use: "+ con.state);
@@ -114,6 +116,18 @@ con.connect(function(err){
             if (err) throw err; 
             console.log("Table set");
             console.log(con.state);
+
+//akash All in one
+conakash.connect(function(err){
+    if(err) throw err;
+    var que = "create table if not exists allinonedata(name text, work text, email text, address text, aadhar int(20));";
+    con.query(que, function (err) {
+       if (err) throw err; 
+       console.log("Akash Database connected!");
+    });
+});
+
+
        });
     });
 });
@@ -464,6 +478,17 @@ app.get('/sign-s3', (req, res) => {
 });
   });
 
+//akash
+app.post('/worker', function(req, res){
+    var data = req.query;
+        var que = `INSERT INTO workerdetails(name,work,email,address,aadhar)values('${data.name}','${data.work}','${data.email}','${data.address}','${data.aadhar}')`;
+        conakash.query(que, function(err, result){
+            if (err) throw err;
+            res.render('worker.html');
+            res.end();
+        });
+});
+
 app.get('/timeliner', (req, res)=>{res.render("timeliner.html");});
 app.get('/timeliner/search', (req, res)=>{
     que = `select * from timeliner where ID = ${req.query.ID}`;
@@ -589,8 +614,14 @@ app.get('/timeliner/createTopic', (req, res)=>{
     console.log(req.query.ID);
 });
 
-app.get('/chat', function(req, res){res.render('chat.html');});
 
+
+
+app.get('/allinone', function(req, res){res.render('allinone.html');});
+app.get('/electrician', function(req, res){res.render('electrician.html');});
+
+
+app.get('/chat', function(req, res){res.render('chat.html');});
 app.get('/', function(req, res){res.render('index.html');});
 app.get('/create', function(req, res){res.render('create.html');});
 app.get('/profile', function(req, res){res.render('profile.html');});
