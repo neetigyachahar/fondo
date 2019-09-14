@@ -65,20 +65,55 @@ app.engine('html', require('ejs').renderFile);
 const S3_BUCKET = process.env.S3_BUCKET;
 aws.config.region = 'ap-south-1';	
 
-var con = mysql.createConnection({
+var con_data = {
     host : "remotemysql.com",
     user : "IHXn51U10d",
     password: "ZZ7sxXwnkE",
     database: "IHXn51U10d",
     "port" : "3306"
-});
+};
 
-var conakash = mysql.createConnection({
-    host : "remotemysql.com",
-    user : "UzxBWmAJRh",
-    password: "l7kouMwha3",
-    database: "UzxBWmAJRh"
-});
+//ddddddddddddddddddddddddddddddddddddddd
+// var db_config = {
+//   host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'example'
+// };
+
+var con;
+
+function handleDisconnect() {
+  con = mysql.createConnection(con_data); // Recreate the connection, since
+                                                  // the old one cannot be reused.
+
+  con.connect(function(err) {              // The server is either down
+    if(err) {                                     // or restarting (takes a while sometimes).
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
+    }                                     // to avoid a hot loop, and to allow our node script to
+  });                                     // process asynchronous requests in the meantime.
+                                          // If you're also serving http, display a 503 error.
+  con.on('error', function(err) {
+    console.log('db error', err);
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+      handleDisconnect();                         // lost due to either server restart, or a
+    } else {                                      // connnection idle timeout (the wait_timeout
+      throw err;                                  // server variable configures this)
+    }
+  });
+}
+
+handleDisconnect();
+//dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+
+//akash
+// var conakash = mysql.createConnection({
+//     host : "remotemysql.com",
+//     user : "UzxBWmAJRh",
+//     password: "l7kouMwha3",
+//     database: "UzxBWmAJRh"
+// });
 
 console.log("Connection state: "+con.state);
 var note = 1;
@@ -104,34 +139,34 @@ app.use(function(req,res, next){
 
 
 
-function conSql(){
-con.connect(function(err){
-    if(err) throw err;
-    var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' ))	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
-    con.query(que, function (err) {
-       if (err) throw err; 
-       console.log("Database connected!");
-        var que = "create table if not exists timeliner ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), topicName text, progress text,  uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
-        con.query(que, function (err) {
-            if (err) throw err; 
-            console.log("Table set");
-            console.log(con.state);
+// function conSql(){
+// con.connect(function(err){
+//     if(err) throw err;
+//     var que = "create table if not exists photobase ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, UserID int(11), upvotes int(11), link text, uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' ))	, PhotoPrivacy text, SetWallpaper int(11), tags text, userPassword varchar(50) default 'fondo');";
+//     con.query(que, function (err) {
+//        if (err) throw err; 
+//        console.log("Database connected!");
+//         var que = "create table if not exists timeliner ( SrNo int(11) AUTO_INCREMENT PRIMARY KEY, ID int(11), topicName text, progress text,  uploaded_at DATETIME DEFAULT (CONVERT_TZ(NOW(), '+0:00', '+05:30' )));";
+//         con.query(que, function (err) {
+//             if (err) throw err; 
+//             console.log("Table set");
+//             console.log(con.state);
 
-//akash All in one
-conakash.connect(function(err){
-    if(err) throw err;
-    var que = "create table if not exists allinonedata(name text, work text, email text, address text, aadhar int(20));";
-    con.query(que, function (err) {
-       if (err) throw err; 
-       console.log("Akash Database connected!");
-    });
-});
+// //akash All in one
+// conakash.connect(function(err){
+//     if(err) throw err;
+//     var que = "create table if not exists allinonedata(name text, work text, email text, address text, aadhar int(20));";
+//     con.query(que, function (err) {
+//        if (err) throw err; 
+//        console.log("Akash Database connected!");
+//     });
+// });
 
 
-       });
-    });
-});
-}
+//        });
+//     });
+// });
+// }
 
 
 app.use(bodyParser.json()); 
@@ -616,6 +651,11 @@ app.get('/timeliner/createTopic', (req, res)=>{
 
 
 
+app.get('/shubham-sharma', (req, res)=>{res.render('shubham_index.html')});
+app.get('/shubham-sharma/an-interstellar-visitor', (req, res)=>{res.render('shubham_post1.html')});
+app.get('/shubham-sharma/about', (req, res)=>{res.render('shubham_about.html')});
+app.get('/contact', (req, res)=>{res.render('fondo_contact.html')});
+
 
 app.get('/allinone', function(req, res){res.render('allinone.html');});
 app.get('/electrician', function(req, res){res.render('electrician.html');});
@@ -662,6 +702,39 @@ app.get('/:d', function(req, res, next){
     });
 });
 
+// app.get('/js/:d', function(req, res, next){
+//     console.log(req.params.d);
+//     fs.readFile('./js/'+req.params.d, 'utf8', function(err, result){
+//         if(err) next();
+//         else{
+//         res.writeHead(200);
+//         res.write(result);
+//         res.end();}
+//     });
+// });
+
+// app.get('/css/:d', function(req, res, next){
+//     console.log(req.params.d);
+//     fs.readFile('./css/'+req.params.d, 'utf8', function(err, result){
+//         if(err) next();
+//         else{
+//         res.writeHead(200);
+//         res.write(result);
+//         res.end();}
+//     });
+// });
+
+
+// app.get('/images/:d', function(req, res, next){
+//     console.log(req.params.d);
+//     fs.readFile('./images/'+req.params.d, 'utf8', function(err, result){
+//         if(err) next();
+//         else{
+//         res.writeHead(200);
+//         res.write(result);
+//         res.end();}
+//     });
+// });
 // app.get('/timeliner/:d', function(req, res, next){
 //     console.log(`timeliner/${req.params.d}`);
 //     fs.readFile(`timeliner/${req.params.d}`, 'utf8', function(err, result){
