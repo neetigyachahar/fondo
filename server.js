@@ -651,9 +651,9 @@ app.get('/timeliner/createTopic', (req, res)=>{
 
 
 
-app.get('/shubham-sharma', (req, res)=>{res.render('shubham_index.html')});
-app.get('/shubham-sharma/an-interstellar-visitor', (req, res)=>{res.render('shubham_post1.html')});
-app.get('/shubham-sharma/about', (req, res)=>{res.render('shubham_about.html')});
+app.get('/shubham-Kumar', (req, res)=>{res.render('shubham_index.html')});
+app.get('/shubham-Kumar/an-interstellar-visitor', (req, res)=>{res.render('shubham_post1.html')});
+app.get('/shubham-Kumar/about', (req, res)=>{res.render('shubham_about.html')});
 app.get('/contact', (req, res)=>{res.render('fondo_contact.html')});
 
 
