@@ -9,6 +9,21 @@ var server = app.listen(process.env.PORT || 3000);
 var io = require('socket.io')(server);
 const gc = io.of('/globalChat');
 const iov = io.of('/vtop');
+var path = require('path');
+const webpush = require('web-push');
+
+const publicVapidKey = "BLK2ZXGlXNAIFCWeG-bQ9Dkfjvc3dlwK3TbHJo6aZ__Tx47QUMvQLdHUi8Okq4Qit9plJwkEkuwRIVid6J2YGwI";
+const privateVapidKey = "9Bl_L30_uwGIXOfMJ--dVeK6-gUBrnWf3zSDCZHZJws";
+
+// Replace with your email
+webpush.setVapidDetails('mailto:fondo.xyz@gmail.com', publicVapidKey, privateVapidKey);
+
+// Public Key:
+// BLK2ZXGlXNAIFCWeG-bQ9Dkfjvc3dlwK3TbHJo6aZ__Tx47QUMvQLdHUi8Okq4Qit9plJwkEkuwRIVid6J2YGwI
+
+// Private Key:
+// 9Bl_L30_uwGIXOfMJ--dVeK6-gUBrnWf3zSDCZHZJws
+
 
 iov.on('connection', function(socket){
     var num1 = io.of('/vtop').sockets;
@@ -469,6 +484,27 @@ app.get('/sign-s3', (req, res) => {
       res.end();
     });
   });
+
+
+  const options = {
+    setHeaders: function (res, path, stat) {
+        res.set('Service-Worker-Allowed', '/');
+    },
+};
+
+app.use(express.static(path.join(process.cwd(), './public/js'), options));
+
+  app.post('/subscribe', (req, res) => {
+    const subscription = req.body;
+    res.status(201).json({});
+    const payload = JSON.stringify({ title: 'test' });
+
+    console.log(subscription);
+    webpush.sendNotification(subscription, payload).catch(error => {
+      console.error(error.stack);
+    });
+  });
+
 
   app.post('/save-details', (req, res) => {
     var host = req.headers.host;

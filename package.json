@@ -26,7 +26,8 @@
     "multer": "1.4.1",
     "mysql": "latest",
     "socket.io": "latest",
-    "url": "latest"
+    "url": "latest",
+    "web-push": "^3.3.5"
   },
   "author": "",
   "license": "ISC",
