@@ -3,6 +3,7 @@ var flag = 1000;
 
 setInterval(checkLogin, 1000);
 
+
 function checkLogin(){
     if($('[name="authorizedIDX"]').length != flag){
         flag = $('[name="authorizedIDX"]').length;
