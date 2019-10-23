@@ -5,6 +5,7 @@ setInterval(checkLogin, 1000);
 
 function checkLogin(){
     if($('[name="authorizedIDX"]').length != flag){
+        //name is authorized and length is not equal to flag
         flag = $('[name="authorizedIDX"]').length;
         if(flag > 0){
             id = $('[name="authorizedIDX"]').val();
@@ -49,6 +50,7 @@ var io = io.connect('http://fondo.xyz');
             var chat = $('#chatInput').val();
             var chat = {
                 id: id,
+                //chat input replace the new tag with the previous one
                 text: $('#chatInput').val().trim().replace(/</g, "&lt;").replace(/>/g, "&gt;")
             };
             if(chat.text.length == 0){
@@ -62,6 +64,7 @@ var io = io.connect('http://fondo.xyz');
         }
 
         $('#chatpop').click(()=>{
+            //if chatpot attractions class outter stringly
             if($('#chatpop').attr("class") == "outter"){
                 alert("Please login to join chat!!");
                 return false;
