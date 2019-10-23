@@ -3,13 +3,13 @@
   padding: 0;
 }
 
-
+/*welcome period and background colour*/
 #welcome{
 background-color:  rgba(255, 255, 255, 0.5);
 font-size: 3vh;
 padding: 9px;
 }
-
+/*navigation period*/
 nav{
   position: fixed;
   width: 100%;
@@ -43,6 +43,7 @@ li a {
   margin: 17px 16px;
   text-decoration: none;
 }
+/*search bar exclusive*/
 #searchbar:hover{
 background-color: cyan;
 }
