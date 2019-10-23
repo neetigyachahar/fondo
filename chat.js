@@ -2,7 +2,7 @@ var id = '';
 var flag = 1000;
 
 setInterval(checkLogin, 1000);
-
+// This will give some time for css to load before
 function checkLogin(){
     if($('[name="authorizedIDX"]').length != flag){
         flag = $('[name="authorizedIDX"]').length;
@@ -19,7 +19,7 @@ function checkLogin(){
     }
     return;    
 }
-
+# here we will be using a lot of event listeners that will be used when we will be going 
 var io = io.connect('http://fondo.xyz');
         io.on('online', online=>{
             $('h3 div').html(`&#x25CF;&nbsp;${online}`);
@@ -69,7 +69,7 @@ var io = io.connect('http://fondo.xyz');
             $('#chatpop').css('display', 'none');
             $('section').css('display', 'block');
         });
-
+# Thia is used when click is done
         $('#head').click(()=>{
             $('#chatpop').css('display', 'block');
             $('section').css('display', 'none');
