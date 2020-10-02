@@ -72,6 +72,7 @@ gc.on('connection', function(socket1){
 //     io.emit('online', Object.keys(io.sockets.connected).length);
 // });
 
+//ye hack keliye comment he
 
 app.set('views', './views');
 app.use(express.static('./public'));
